@@ -10,7 +10,7 @@ spec:
   destination:
     namespace: kube-system
     server: https://kubernetes.default.svc
-  project: infra
+  project: default
   source:
     path: deploy/songlaa/base
     repoURL: https://github.com/verysonglaa/songlaa-terraform-k8s-cluster-lab

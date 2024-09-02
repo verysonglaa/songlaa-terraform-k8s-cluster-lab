@@ -73,6 +73,8 @@ resource "helm_release" "argocd" {
 
 
 
+
+
 resource "helm_release" "argocd-bootstrap" {
   name       = "argocd-bootstrap"
   repository = "https://argoproj.github.io/argo-helm"

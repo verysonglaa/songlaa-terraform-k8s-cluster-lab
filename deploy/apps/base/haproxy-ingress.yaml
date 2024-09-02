@@ -10,9 +10,9 @@ spec:
   destination:
     namespace: kube-system
     server: https://kubernetes.default.svc
-  project: infra
+  project: default
   source:
-    path: deploy/haproxy-ingress/overlays/training.cluster.acend.ch
+    path: deploy/haproxy-ingress/overlays/training.cluster.songlaa.com
     repoURL: https://github.com/verysonglaa/songlaa-terraform-k8s-cluster-lab
     targetRevision: HEAD
   syncPolicy:
