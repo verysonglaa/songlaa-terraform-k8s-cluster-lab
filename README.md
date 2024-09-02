@@ -8,7 +8,7 @@ We use [Hetzner](https://www.hetzner.com/cloud) as our cloud provider and [RKE2]
 
 Cluster setup is based on our [infrastructure](https://github.com/acend/infrastructure) setup.
 
-In order to deploy our acend Kubernetes Cluster the following steps are necessary:
+In order to deploy our songlaa Kubernetes Cluster the following steps are necessary:
 
 1. Terraform to deploy base infrastructure
    * VM's for controlplane and worker nodes
@@ -16,15 +16,14 @@ In order to deploy our acend Kubernetes Cluster the following steps are necessar
    * Loadbalancer for Kubernetes API and RKE2
    * Firewall
    * Hetzner Cloud Controller Manager for the Kubernetes Cluster Networking
-2. Terraform to deploy and then ootstrap ArgoCD using our [training-setup](https://github.com/acend/training-setup)
+2. Terraform to deploy and then bootstrap ArgoCD using our [training-setup](https://github.com/verysonglaa/training-setup)
 3. ArgoCD to deploy resources student/user resources and other components like
    * Storage Provisioner (hcloud csi, longhorn)
    * Ingresscontroller
    * Cert-Manager
-   * Gitea
    * etc
 
-See our [training-setup](https://github.com/acend/training-setup) for details on how the bootstrapping works.
+See our [training-setup](https://github.com/verysonglaa/training-setup) for details on how the bootstrapping works.
 
 For more details on the cluster design and setup see the [documentation](https://github.com/acend/infrastructure/tree/main/docs#cluster-basic-design--configuration-and-setup-procedure) in our main infrastructure repository.
 
@@ -46,7 +45,7 @@ The [ACME Webhook for the hosttech DNS API](https://github.com/piccobit/cert-man
 The following `ClusterIssuer` are available:
 
 * `letsencrypt-prod`: for general http01 challenge.
-* `letsencrypt-prod-acend`: for dns01 challenge using the hosttech acme webhook. The token for hosttech is stored in the `hosttech-secret` Secret in Namespace `cert-manager`
+* `letsencrypt-prod-songlaa`: for dns01 challenge using the hosttech acme webhook. The token for hosttech is stored in the `hosttech-secret` Secret in Namespace `cert-manager`
 
 #### Hetzner Kubernetes Cloud Controller Manager
 
@@ -67,10 +66,6 @@ The StorageClass `hcloud-volumes` is available. Be aware, `hcloud-volumes` are p
 
 As our Kubernetes Nodes have enough local disk available, we use [longhorn](https://longhorn.io/) as a additional storage solution. The `longhorn` storageclass is set as the default storage class.
 
-#### Gitea
-
-We use a local [Gitea](https://about.gitea.com/) installation that is used in our trainings.
-
 ## Training Environment
 
 The training environment contains the following per student/user:
@@ -78,8 +73,7 @@ The training environment contains the following per student/user:
 * Credentials
 * All necessary namespaces
 * RBAC to access the namespaces
-* a [Webshell](https://github.com/acend/webshell-env) per student/user.
-* a Gitea account and a Git repository clone of our [argocd-training-example](https://github.com/acend/argocd-training-examples.git)
+* a [Webshell](https://github.com/verysonglaa/webshell-env) per student/user.
 
 It is deployed with ArgoCD using ApplicationSets. The ApplicationSets are deployed with Terraform
 

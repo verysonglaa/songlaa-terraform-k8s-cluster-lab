@@ -16,7 +16,7 @@ applicationsets:
       spec:
         project: trainee-environment
         source:
-          repoURL: https://github.com/acend/terraform-k8s-cluster-lab
+          repoURL: https://github.com/verysonglaa/songlaa-terraform-k8s-cluster-lab
           targetRevision: HEAD
           path: 'charts/user-env'
           helm:

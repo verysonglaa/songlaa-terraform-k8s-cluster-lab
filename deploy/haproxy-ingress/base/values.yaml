@@ -13,7 +13,7 @@ controller:
     enabled: true
 
   extraArgs:
-    default-ssl-certificate: cert-manager/acend-wildcard
+    default-ssl-certificate: cert-manager/songlaa-wildcard
 
   metrics:
     enabled: true

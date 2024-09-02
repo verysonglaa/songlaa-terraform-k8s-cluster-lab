@@ -4,14 +4,18 @@ variable "hcloud_api_token" {
   description = "Hetzner Cloud API Token"
 }
 
-variable "hosttech_dns_token" {
+variable "cloudflare_api_token" {
+  description = "API key for your Cloudflare account"
   type        = string
-  description = "Hosttech DNS Api Token"
+  sensitive   = true
 }
-variable "hosttech-dns-zone-id" {
+
+variable "cloudflare_zone_id" {
+  description = "Cloudflare Zone ID for the DNS records"
   type        = string
-  description = "Zone ID of the hosttech DNS Zone where LoadBalancer A/AAAA records are created"
 }
+
+
 
 variable "location" {
   type        = string
@@ -33,7 +37,7 @@ variable "cluster_name" {
 variable "cluster_domain" {
   type        = string
   description = "common subdomain for all cluster"
-  default     = "cluster.acend.ch"
+  default     = "cluster.songlaa.com"
 }
 
 variable "rke2_version" {
@@ -103,14 +107,14 @@ variable "worker_count" {
   description = "Count of rke2 workers"
 
   validation {
-    condition     = var.worker_count >= 3
+    condition     = var.worker_count >= 2
     error_message = "You must have at least 3 worker nodes."
   }
 }
 
 variable "letsencrypt_email" {
   type    = string
-  default = "sebastian@acend.ch"
+  default = "gabriel@acend.ch"
 }
 
 
@@ -212,3 +216,4 @@ variable "first_install" {
   default     = true
   description = "Indicate if this is the very first installation. RKE2 needs to handle the first controlplane node special when its the initial installation"
 }
+

@@ -2,14 +2,14 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: acend-wildcard
+  name: songlaa-wildcard
   namespace: cert-manager
 spec:
-  secretName: acend-wildcard
+  secretName: songlaa-wildcard
   dnsNames:
-  - "*.training.cluster.acend.ch"
+  - "*.training.cluster.songlaa.com"
   issuerRef:
-    name: letsencrypt-prod-acend
+    name: letsencrypt-prod-songlaa
     kind: ClusterIssuer
     group: cert-manager.io
   secretTemplate:

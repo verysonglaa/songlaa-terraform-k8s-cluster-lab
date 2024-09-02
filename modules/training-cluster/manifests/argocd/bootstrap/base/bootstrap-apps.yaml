@@ -1,0 +1,14 @@
+applications: 
+  argocd:
+    project: default
+    source:
+      repoURL: https://github.com/verysonglaa/songlaa-terraform-k8s-cluster-lab
+      targetRevision: HEAD
+      path: deploy/apps/base/
+    destination:
+      server: https://kubernetes.default.svc
+      namespace: argocd
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true

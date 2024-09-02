@@ -12,8 +12,8 @@ spec:
     server: https://kubernetes.default.svc
   project: infra
   source:
-    path: deploy/welcome/overlays/training.cluster.acend.ch
-    repoURL: https://github.com/acend/terraform-k8s-cluster-lab
+    path: deploy/welcome/overlays/training.cluster.songlaa.com
+    repoURL: https://github.com/verysonglaa/songlaa-terraform-k8s-cluster-lab
     targetRevision: HEAD
   syncPolicy:
     automated:

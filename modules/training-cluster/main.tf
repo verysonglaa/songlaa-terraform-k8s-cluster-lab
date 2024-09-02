@@ -17,6 +17,8 @@ provider "helm" {
   }
 }
 
+
+
 locals {
   vms-enabled = var.user-vms-enabled ? 1 : 0
   hasWorker   = var.worker_count > 0 ? 1 : 0
@@ -27,7 +29,7 @@ resource "random_password" "rke2_cluster_secret" {
   special = false
 }
 
-# Create Passwords for the students (shared by multiple apps like webshell, argocd and gitea)
+# Create Passwords for the students (shared by multiple apps like webshell, argocd)
 resource "random_password" "student-passwords" {
   length           = 16
   special          = true

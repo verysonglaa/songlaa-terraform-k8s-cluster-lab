@@ -71,6 +71,24 @@ resource "helm_release" "argocd" {
 
 }
 
+
+
+resource "helm_release" "argocd-bootstrap" {
+  name       = "argocd-bootstrap"
+  repository = "https://argoproj.github.io/argo-helm"
+  chart      = "argocd-apps"
+  namespace  = kubernetes_namespace.argocd.metadata.0.name
+  version    = "2.0.0"
+
+  values = [
+    templatefile("${path.module}/manifests/argocd/bootstrap/base/bootstrap-apps.yaml", {
+      namespace = helm_release.argocd.namespace
+    }),
+  ]
+}
+
+
+
 resource "null_resource" "cleanup-before-destroy" {
 
   depends_on = [
@@ -114,3 +132,43 @@ resource "time_sleep" "wait_for_argocd-cleanup" {
 
   destroy_duration = "60s"
 }
+
+# resource "kubernetes_manifest" "argo_application_bootstrap" {
+#   manifest = {
+#     apiVersion = "argoproj.io/v1alpha1"
+#     kind       = "Application"
+#     metadata = {
+#       name      = "bootstrap"
+#       namespace = "argocd"
+#       annotations = {
+#         "argocd.argoproj.io/sync-wave" = "-1"
+#       }
+#     }
+#     spec = {
+#       destination = {
+#         namespace = "kube-system"
+#         server    = "https://kubernetes.default.svc"
+#       }
+#       project = "infra"
+#       source = {
+#         path           = "deploy/apps/overlays/training.cluster.songlaa.com"
+#         repoURL        = "https://github.com/verysonglaa/songlaa-terraform-k8s-cluster-lab"
+#         targetRevision = "HEAD"
+#       }
+#       syncPolicy = {
+#         automated = {
+#           prune    = false
+#           selfHeal = true
+#         }
+#         retry = {
+#           limit = 20
+#           backoff = {
+#             duration    = "10s"
+#             factor      = 2
+#             maxDuration = "10m"
+#           }
+#         }
+#       }
+#     }
+#   }
+# }

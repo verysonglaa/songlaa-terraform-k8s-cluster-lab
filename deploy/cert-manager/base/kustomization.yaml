@@ -41,32 +41,3 @@ helmCharts:
           operator: "Exists"
           effect: "NoSchedule"
 
-  - name: cert-manager-webhook-hosttech
-    releaseName: cert-manager-webhook-hosttech
-    namespace: cert-manager
-    version: 0.3.0
-    repo: https://piccobit.github.io/helm-charts
-    valuesInLine:
-      groupName: acme.acend.ch
-      nodeSelector:
-        node-role.kubernetes.io/control-plane: "true"
-      tolerations:
-      - key: "node-role.kubernetes.io/control-plane"
-        operator: "Exists"
-        effect: "NoSchedule"
-
-patches:
-- target:
-    kind: Certificate
-    name: cert-manager-webhook-hosttech-ca
-  patch: |-
-    - op: replace
-      path: /spec/duration
-      value: 43800h0m0s
-- target:
-    kind: Certificate
-    name: cert-manager-webhook-hosttech-webhook-tls
-  patch: |-
-    - op: replace
-      path: /spec/duration
-      value: 8760h0m0s

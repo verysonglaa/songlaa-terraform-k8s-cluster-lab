@@ -3,17 +3,11 @@ kind: Kustomization
 resources:
   - cert-manager.yaml
   - config-syncer.yaml
-  - crossplane.yaml
-  - crossplane-provider.yaml
-  - crossplane-provider-config.yaml
   - haproxy-ingress.yaml
   - hetzner-csi.yaml
   - kubernetes-secret-generator.yaml
   - longhorn.yaml
   - monitoring.yaml
-  - gitea.yaml
-  - acend.yaml
+  - songlaa.yaml
   - welcome.yaml
-  - oauth-proxy.yaml
   - external-secrets.yaml
-  - kubevirt.yaml

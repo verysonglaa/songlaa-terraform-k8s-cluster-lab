@@ -1,33 +1,53 @@
-module "api-a-record" {
 
-  providers = {
-    restapi = restapi.hosttech_dns
-  }
+provider "cloudflare" { # using tf env vars
+  api_token = var.cloudflare_api_token
+}
 
-  source = "./modules/hosttech-dns-record"
-
-  hosttech-dns-zone-id = var.hosttech-dns-zone-id
-
+// "K8S API for Training Cluster ${var.cluster_name}"
+resource "cloudflare_record" "api_a_record" {
+  zone_id = var.cloudflare_zone_id
+  name    = "api.${var.cluster_name}.${split(".", var.cluster_domain)[0]}"
+  content = hcloud_load_balancer.lb.ipv4
   type    = "A"
-  name    = "api.${var.cluster_name}.${split(".", var.cluster_domain)[0]}"
-  ipv4    = hcloud_load_balancer.lb.ipv4
-  comment = "K8S API for Training Cluster ${var.cluster_name}"
   ttl     = 3600
+  proxied = false
 }
 
-module "api-aaaa-record" {
+// "K8S API for Training Cluster ${var.cluster_name}"
 
-  providers = {
-    restapi = restapi.hosttech_dns
-  }
-
-  source = "./modules/hosttech-dns-record"
-
-  hosttech-dns-zone-id = var.hosttech-dns-zone-id
-
+resource "cloudflare_record" "api_aaaa_record" {
+  zone_id = var.cloudflare_zone_id
+  name    = "api.${var.cluster_name}.${split(".", var.cluster_domain)[0]}"
+  content = hcloud_load_balancer.lb.ipv6
   type    = "AAAA"
-  name    = "api.${var.cluster_name}.${split(".", var.cluster_domain)[0]}"
-  ipv6    = hcloud_load_balancer.lb.ipv6
-  comment = "K8S API for Training Cluster ${var.cluster_name}"
   ttl     = 3600
+  proxied = false
 }
+
+
+
+resource "kubernetes_namespace" "cert_manager" {
+
+  provider = kubernetes.local
+
+  depends_on = [
+    ssh_resource.getkubeconfig
+  ]
+  metadata {
+    name = "cert-manager"
+  }
+}
+
+# use kubernetes provider to create a secret in namespace cert-manager named cloudflare-api-token-secret which holds a token named api-token and put var.cloudflare_api_token in it
+resource "kubernetes_secret" "cloudflare_api_token_secret" {
+
+  provider = kubernetes.local
+  metadata {
+    name      = "cloudflare-api-token-secret"
+    namespace = kubernetes_namespace.cert_manager.metadata.0.name
+  }
+  data = {
+    api-token = var.cloudflare_api_token
+  }
+}
+

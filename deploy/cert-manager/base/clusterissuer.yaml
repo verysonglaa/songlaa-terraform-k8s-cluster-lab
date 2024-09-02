@@ -5,7 +5,7 @@ metadata:
   name: letsencrypt-prod
 spec:
   acme:
-    email: info@acend.ch
+    email: verysonglaa@gmail.com
     server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       name: letsencrypt-prod
@@ -14,25 +14,27 @@ spec:
           ingress:
             class: haproxy
 ---
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: cloudflare-api-token-secret
+# type: Opaque
+# stringData:
+#   api-token: 1234567890
+# ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-prod-acend
 spec:
   acme:
-    email: info@acend.ch
+    email: verysonglaa@gmail.com
     server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       name: letsencrypt-prod-acend
     solvers:
       - dns01:
-          webhook:
-            groupName: acme.acend.ch
-            solverName: hosttech
-            config:
-              secretName: hosttech-secret
-              apiUrl: https://api.ns1.hosttech.eu/api/user/v1
-        selector:
-          dnsZones:
-            - 'labz.ch'
-            - 'acend.ch'
+          cloudflare:
+            apiTokenSecretRef:
+              name: cloudflare-api-token-secret
+              key: api-token
