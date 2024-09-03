@@ -45,6 +45,9 @@ resource "kubernetes_secret" "cloudflare_api_token_secret" {
   metadata {
     name      = "cloudflare-api-token-secret"
     namespace = kubernetes_namespace.cert_manager.metadata.0.name
+    annotations  = {
+      "kubed.appscode.com/sync" = "kubernetes.io/metadata.name=external-dns"
+    }
   }
   data = {
     api-token = var.cloudflare_api_token

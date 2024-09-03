@@ -49,7 +49,7 @@ applicationsets:
                 - hosts:
                   - {{traineename}}.${cluster_name}.${cluster_domain}
                   - {{traineename}}-webview.${cluster_name}.${cluster_domain}
-                  secretName: acend-wildcard
+                  secretName: songlaa-wildcard
               theia:
                 webview_url: {{traineename}}-webview.${cluster_name}.${cluster_domain}
                 persistence:

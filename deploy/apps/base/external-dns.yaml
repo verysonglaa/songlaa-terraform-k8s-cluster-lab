@@ -1,0 +1,27 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    name: external-dns
+    namespace: argocd
+    annotations:
+        argocd.argoproj.io/sync-wave: "0"
+spec:
+    destination:
+        namespace: kube-system
+        server: https://kubernetes.default.svc
+    project: default
+    source:
+        repoURL: https://github.com/verysonglaa/songlaa-terraform-k8s-cluster-lab
+        path: deploy/external-dns
+        targetRevision: HEAD
+    syncPolicy:
+        automated:
+            prune: true
+            selfHeal: true
+        retry:
+            limit: 20
+            backoff:
+                duration: 10s
+                factor: 2
+                maxDuration: "10m"

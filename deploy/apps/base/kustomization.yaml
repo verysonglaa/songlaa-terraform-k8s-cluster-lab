@@ -10,4 +10,4 @@ resources:
   - monitoring.yaml
   - songlaa.yaml
   - welcome.yaml
-  - external-secrets.yaml
+  - external-dns.yaml

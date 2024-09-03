@@ -32,9 +32,9 @@ server:
     enabled: true
     ingressClassName: haproxy
     extraTls:
-    - secretName: acend-wildcard
+    - secretName: songlaa-wildcard
   ingressGrpc:
     enabled: true
     ingressClassName: haproxy
     extraTls:
-    - secretName: acend-wildcard
+    - secretName: songlaa-wildcard
