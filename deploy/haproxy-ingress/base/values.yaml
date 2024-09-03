@@ -11,6 +11,9 @@ controller:
   ingressClassResource:
     default: true
     enabled: true
+    
+  publishService:
+    enabled: true
 
   extraArgs:
     default-ssl-certificate: cert-manager/songlaa-wildcard
