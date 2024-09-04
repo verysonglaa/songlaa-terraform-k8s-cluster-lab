@@ -1,5 +1,5 @@
 applications: 
-  argocd:
+  applications:
     project: default
     source:
       repoURL: https://github.com/verysonglaa/songlaa-terraform-k8s-cluster-lab

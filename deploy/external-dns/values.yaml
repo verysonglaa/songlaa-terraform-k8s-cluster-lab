@@ -1,9 +1,13 @@
 provider: 
   name: cloudflare
 env:
-# provided by teraform for cert-manager and copied by config-sync
+# provided by teraform for cert-manager and copied by config-syncer
   - name: CF_API_TOKEN
     valueFrom:
       secretKeyRef:
         name: cloudflare-api-token-secret
         key: api-token
+sources: 
+  - service
+policy: sync
+

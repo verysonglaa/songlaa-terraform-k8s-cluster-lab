@@ -75,7 +75,7 @@ resource "helm_release" "argocd" {
 
 
 
-resource "helm_release" "argocd-bootstrap" {
+resource "helm_release" "argocd-applications" {
   name       = "argocd-bootstrap"
   repository = "https://argoproj.github.io/argo-helm"
   chart      = "argocd-apps"
@@ -83,7 +83,7 @@ resource "helm_release" "argocd-bootstrap" {
   version    = "2.0.0"
 
   values = [
-    templatefile("${path.module}/manifests/argocd/bootstrap/base/bootstrap-apps.yaml", {
+    templatefile("${path.module}/manifests/argocd/applications/base/applications.yaml", {
       namespace = helm_release.argocd.namespace
     }),
   ]
@@ -108,13 +108,14 @@ resource "null_resource" "cleanup-before-destroy" {
 # curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
 # echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
 # chmod +x ./kubectl
-./kubectl -n argocd delete application bootstrap --kubeconfig <(echo $KUBECONFIG | base64 --decode) || true
-./kubectl -n argocd delete application haproxy-ingress --kubeconfig <(echo $KUBECONFIG | base64 --decode) || true
+kubectl patch applications.argoproj.io applications -n argocd --type merge -p '{"spec": {"syncPolicy": {"automated": null}}}' --kubeconfig <(echo $KUBECONFIG | base64 --decode) || true
+kubectl -n argocd delete application applications --kubeconfig <(echo $KUBECONFIG | base64 --decode) || true
+kubectl -n argocd delete application haproxy-ingress --kubeconfig <(echo $KUBECONFIG | base64 --decode) || true
 #./kubectl delete ns ingress-haproxy --kubeconfig <(echo $KUBECONFIG | base64 --decode) || true
 # Wait for DNS Record to be cleaned up
 sleep 60
-./kubectl -n argocd delete application --all --kubeconfig <(echo $KUBECONFIG | base64 --decode) || true
-./kubectl -n argocd delete applicationsets --all --kubeconfig <(echo $KUBECONFIG | base64 --decode) || true
+kubectl -n argocd delete application --all --kubeconfig <(echo $KUBECONFIG | base64 --decode) || true
+kubectl -n argocd delete applicationsets --all --kubeconfig <(echo $KUBECONFIG | base64 --decode) || true
 
 
 EOH
@@ -135,42 +136,3 @@ resource "time_sleep" "wait_for_argocd-cleanup" {
   destroy_duration = "60s"
 }
 
-# resource "kubernetes_manifest" "argo_application_bootstrap" {
-#   manifest = {
-#     apiVersion = "argoproj.io/v1alpha1"
-#     kind       = "Application"
-#     metadata = {
-#       name      = "bootstrap"
-#       namespace = "argocd"
-#       annotations = {
-#         "argocd.argoproj.io/sync-wave" = "-1"
-#       }
-#     }
-#     spec = {
-#       destination = {
-#         namespace = "kube-system"
-#         server    = "https://kubernetes.default.svc"
-#       }
-#       project = "infra"
-#       source = {
-#         path           = "deploy/apps/overlays/training.cluster.songlaa.com"
-#         repoURL        = "https://github.com/verysonglaa/songlaa-terraform-k8s-cluster-lab"
-#         targetRevision = "HEAD"
-#       }
-#       syncPolicy = {
-#         automated = {
-#           prune    = false
-#           selfHeal = true
-#         }
-#         retry = {
-#           limit = 20
-#           backoff = {
-#             duration    = "10s"
-#             factor      = 2
-#             maxDuration = "10m"
-#           }
-#         }
-#       }
-#     }
-#   }
-# }

@@ -27,6 +27,6 @@ controller:
   service:
     type: LoadBalancer
     externalTrafficPolicy: Cluster
-    #annotations:
-    #add annotation for external-dns (cloudflare) to create a A record for training.cluster.songlaa.com
-      # - external-dns.alpha.kubernetes.io/hostname: training.cluster.songlaa.com
+    annotations:
+    #add annotation for external-dns (cloudflare) to create a A record for *.training.cluster.songlaa.com
+      - external-dns.alpha.kubernetes.io/cloudflare-hostname: *.training.cluster.songlaa.com

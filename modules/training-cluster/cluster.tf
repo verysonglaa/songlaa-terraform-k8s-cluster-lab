@@ -21,8 +21,7 @@ resource "hcloud_placement_group" "controlplane" {
 resource "hcloud_server" "controlplane" {
 
   depends_on = [
-    hcloud_load_balancer_service.rke2,
-    hcloud_load_balancer_target.controlplane
+    hcloud_load_balancer_service.rke2
   ]
 
   count = var.controlplane_count
