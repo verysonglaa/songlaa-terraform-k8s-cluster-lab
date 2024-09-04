@@ -76,7 +76,7 @@ resource "helm_release" "argocd" {
 
 
 resource "helm_release" "argocd-applications" {
-  name       = "argocd-bootstrap"
+  name       = "argocd-applications"
   repository = "https://argoproj.github.io/argo-helm"
   chart      = "argocd-apps"
   namespace  = kubernetes_namespace.argocd.metadata.0.name
@@ -108,10 +108,11 @@ resource "null_resource" "cleanup-before-destroy" {
 # curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
 # echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
 # chmod +x ./kubectl
-kubectl patch applications.argoproj.io applications -n argocd --type merge -p '{"spec": {"syncPolicy": {"automated": null}}}' --kubeconfig <(echo $KUBECONFIG | base64 --decode) || true
-kubectl -n argocd delete application applications --kubeconfig <(echo $KUBECONFIG | base64 --decode) || true
-kubectl -n argocd delete application haproxy-ingress --kubeconfig <(echo $KUBECONFIG | base64 --decode) || true
-#./kubectl delete ns ingress-haproxy --kubeconfig <(echo $KUBECONFIG | base64 --decode) || true
+kubectl patch applications.argoproj.io applications -n argocd --type merge -p '{"spec": {"syncPolicy": {"automated": null}}}' --kubeconfig <(echo $KUBECONFIG | base64 --decode)
+kubectl -n argocd delete application haproxy-ingress --kubeconfig <(echo $KUBECONFIG | base64 --decode)
+kubectl -n argocd delete application applications --kubeconfig <(echo $KUBECONFIG | base64 --decode) 
+kubectl delete ns ingress-haproxy --ignore-not-found=true --kubeconfig <(echo $KUBECONFIG | base64 --decode)
+
 # Wait for DNS Record to be cleaned up
 sleep 60
 kubectl -n argocd delete application --all --kubeconfig <(echo $KUBECONFIG | base64 --decode) || true
