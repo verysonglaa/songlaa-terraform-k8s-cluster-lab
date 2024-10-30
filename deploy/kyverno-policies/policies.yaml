@@ -53,11 +53,11 @@ spec:
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
-  name: deny-taints-and-tolerations-in-user-namespaces
+  name: deny-tolerations-for-control-plane
 spec:
   validationFailureAction: enforce
   rules:
-    - name: deny-taints-and-tolerations
+    - name: deny-control-plane-tolerations
       match:
         resources:
           kinds:
@@ -65,7 +65,9 @@ spec:
           namespaces:
             - "user*"
       validate:
-        message: "Pods in user namespaces are not allowed to set taints or tolerations."
-        pattern:
-          spec:
-            tolerations: null
+        message: "Pods in user namespaces are not allowed to tolerate control plane taints."
+        deny:
+          conditions:
+            - key: "{{ request.object.spec.tolerations[?(@.key=='node-role.kubernetes.io/control-plane')].operator }}"
+              operator: Equals
+              value: "Exists"
