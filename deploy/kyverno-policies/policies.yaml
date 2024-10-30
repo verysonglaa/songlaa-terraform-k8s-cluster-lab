@@ -19,7 +19,7 @@ metadata:
       ephemeralContainers, initContainers, and containers to ensure the only
       capabilities that can be added are either NET_BIND_SERVICE or CAP_CHOWN.      
 spec:
-  validationFailureAction: Enforce
+  validationFailureAction: enforce
   background: true
   rules:
     - name: allowed-capabilities
@@ -28,6 +28,8 @@ spec:
         - resources:
             kinds:
               - Pod
+            namespaces:
+              - "user*"
       preconditions:
         all:
         - key: "{{ request.operation || 'BACKGROUND' }}"
@@ -53,7 +55,7 @@ kind: ClusterPolicy
 metadata:
   name: deny-taints-and-tolerations-in-user-namespaces
 spec:
-  validationFailureAction: Enforce
+  validationFailureAction: enforce
   rules:
     - name: deny-taints-and-tolerations
       match:
