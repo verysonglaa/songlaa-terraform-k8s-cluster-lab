@@ -1,0 +1,55 @@
+---
+# see https://medium.com/@andrea.grillo96/install-kyverno-with-an-argocd-applicationset-4d4370bb0deb
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kyverno
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  destination:
+    namespace: kyverno
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    chart: kyverno
+    repoURL: https://kyverno.github.io/kyverno
+    targetRevision: 2.6.0
+  ignoreDifferences:
+  - group: rbac.authorization.k8s.io
+    kind: ClusterRole
+    jsonPointers:
+      - /rules
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - Replace=true
+---
+# https://medium.com/@charled.breteche/using-kyverno-policies-with-argocd-1a600c1b249
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kyverno-policies
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/verysonglaa/songlaa-terraform-k8s-cluster-lab
+    targetRevision: main
+    path: deploy/kyverno-policies
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kyverno
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+  ignoreDifferences:
+  - group: kyverno.io
+    kind: ClusterPolicy
+    jqPathExpressions:
+      - .spec.rules[] | select(.name|test("autogen-."))

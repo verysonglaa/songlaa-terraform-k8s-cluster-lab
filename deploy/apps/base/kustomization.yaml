@@ -11,3 +11,4 @@ resources:
   - songlaa.yaml
   - welcome.yaml
   - external-dns.yaml
+  - kyverno.yaml
