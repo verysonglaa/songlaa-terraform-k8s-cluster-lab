@@ -16,6 +16,16 @@ spec:
     chart: kyverno
     repoURL: https://kyverno.github.io/kyverno
     targetRevision: 2.6.0
+    helm:
+      values: |
+        admissionController:
+          replicas: 2  # Set replicas to 2
+        backgroundController:
+          replicas: 2  # Set replicas to 2
+        cleanupController:
+          replicas: 2  # Set replicas to 2
+        reportsController:
+          replicas: 2  # Set replicas to 2
   ignoreDifferences:
   - group: rbac.authorization.k8s.io
     kind: ClusterRole
