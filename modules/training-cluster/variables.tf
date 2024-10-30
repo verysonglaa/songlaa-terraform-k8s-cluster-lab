@@ -144,6 +144,18 @@ variable "user-vms-enabled" {
   default     = false
 }
 
+variable "user-vms-unattached-enabled" {
+  description = "Deploy free floating VMs next to the cluster"
+  type        = bool
+  default     = false
+}
+
+variable "user-vms-unattached-count" {
+  description = "Deploy free floating VMs next to the cluster"
+  type        = number
+  default     = 0
+}
+
 variable "webshell-rbac-enabled" {
   description = "Deploy RBAC to access Kubernetes Cluster for each student"
   type        = bool
@@ -154,6 +166,7 @@ variable "webshell-rbac-enabled" {
 variable "webshell-settings" {
   type = object({
     version                   = string
+    dind-enabled              = bool
     theia-persistence-enabled = bool
     dind-persistence-enabled  = bool
     webshell-rbac-enabled     = bool
@@ -185,6 +198,7 @@ variable "webshell-settings" {
     theia-persistence-enabled = true
     dind-persistence-enabled  = true
     webshell-rbac-enabled     = true
+    dind-enabled              = true
 
     dind_resources = {
       limits = {

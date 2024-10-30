@@ -1,5 +1,5 @@
 #!/bin/bash
-read -p "Are you sure? (y/N): " -n1 confirmation
+read -p "This will update/create a new cluster. Are you sure? (y/N): " -n1 confirmation
 
 if [[ "$confirmation" != "y" && "$confirmation" != "Y" ]]; then
     echo "Operation canceled."
@@ -12,4 +12,3 @@ echo
 echo "export KUBECONFIG=~/.kube/training-cluster-config"
 echo "kubectl -n welcome port-forward services/welcome 8080:80 &"
 echo "curl http://localhost:8080/teacher"
-

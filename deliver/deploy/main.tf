@@ -38,10 +38,13 @@ module "training-cluster" {
   # Webshell
   # Make sure to scale down to 0 before removing the cluster, 
   # otherwise there will be terraform errors due to missing provider config
-  count-students = 5
+  count-students = 4
 
   # User VMs
-  user-vms-enabled = false
+  user-vms-enabled            = var.user-vms-enabled
+  user-vms-unattached-enabled = var.user-vms-unattached-enabled
+  user-vms-unattached-count   = var.user-vms-unattached-count
+
 
   # RBAC in Webshell
   webshell-rbac-enabled = true

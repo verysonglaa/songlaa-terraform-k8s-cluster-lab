@@ -29,7 +29,7 @@ resource "hcloud_server" "user-vm" {
   name        = "vm-${var.cluster_name}-${var.studentname-prefix}-${count.index + 1}"
   location    = var.location
   image       = "ubuntu-22.04"
-  server_type = "cpx31"
+  server_type = "cx22"
 
   labels = {
     uservm : "true"

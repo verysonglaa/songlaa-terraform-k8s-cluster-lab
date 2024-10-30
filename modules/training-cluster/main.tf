@@ -20,8 +20,9 @@ provider "helm" {
 
 
 locals {
-  vms-enabled = var.user-vms-enabled ? 1 : 0
-  hasWorker   = var.worker_count > 0 ? 1 : 0
+  vms-enabled            = var.user-vms-enabled ? 1 : 0
+  vms-unattached-enabled = var.user-vms-unattached-enabled ? 1 : 0
+  hasWorker              = var.worker_count > 0 ? 1 : 0
 }
 
 resource "random_password" "rke2_cluster_secret" {
@@ -50,5 +51,20 @@ module "student-vms" {
   ssh_key = hcloud_ssh_key.terraform.name
 
   count = local.vms-enabled
+
+}
+
+module "student-vms-unattached" {
+  source = "./modules/student-vms"
+
+  cluster_name = var.cluster_name
+
+  count-students     = var.user-vms-unattached-count
+  student-passwords  = random_password.student-passwords
+  studentname-prefix = var.studentname-prefix
+
+  ssh_key = hcloud_ssh_key.terraform.name
+
+  count = local.vms-unattached-enabled
 
 }

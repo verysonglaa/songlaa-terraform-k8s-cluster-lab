@@ -1,12 +1,10 @@
-# Acend Kubernetes Training Cluster Setup with Terraform
+# Songlaa Kubernetes Training Cluster Setup with Terraform
 
 ## Overview
 
 This setup provisions a Kubernetes Cluster to be used with our trainings.
 
 We use [Hetzner](https://www.hetzner.com/cloud) as our cloud provider and [RKE2](https://docs.rke2.io/) to create the kubernetes cluster. [Kubernetes Cloud Controller Manager for Hetzner Cloud](https://github.com/hetznercloud/hcloud-cloud-controller-manager) to provision lobalancer from a Kubernetes service (type `Loadbalancer`) objects and also configure the networking & native routing for the Kubernetes cluster network traffic.
-
-Cluster setup is based on our [infrastructure](https://github.com/acend/infrastructure) setup.
 
 In order to deploy our songlaa Kubernetes Cluster the following steps are necessary:
 
@@ -23,9 +21,6 @@ In order to deploy our songlaa Kubernetes Cluster the following steps are necess
    * Cert-Manager
    * etc
 
-See our [training-setup](https://github.com/verysonglaa/training-setup) for details on how the bootstrapping works.
-
-For more details on the cluster design and setup see the [documentation](https://github.com/acend/infrastructure/tree/main/docs#cluster-basic-design--configuration-and-setup-procedure) in our main infrastructure repository.
 
 ### Components
 
@@ -37,6 +32,10 @@ There is a local `admin` account. The password can be extracted with `terraform 
 
 Each student/user also get a local account.
 
+#### external-dns
+
+We use external dns to add records to cloudflare.
+
 #### cert-manager
 
 [Cert Manager](https://cert-manager.io/) is used to issue Certificates (Let's Encrypt).
@@ -44,8 +43,7 @@ The [ACME Webhook for the hosttech DNS API](https://github.com/piccobit/cert-man
 
 The following `ClusterIssuer` are available:
 
-* `letsencrypt-prod`: for general http01 challenge.
-* `letsencrypt-prod-songlaa`: for dns01 challenge using the hosttech acme webhook. The token for hosttech is stored in the `hosttech-secret` Secret in Namespace `cert-manager`
+* `letsencrypt-prod-songlaa`: for dns01 challenge using cloudflare provider. The api-token is stored in cert-manager namespace
 
 #### Hetzner Kubernetes Cloud Controller Manager
 
@@ -83,4 +81,4 @@ There is a Welcome page deployed at https://welcome.${cluster_name}.{cluster_dom
 
 ## Usage
 
-This repo shall be used as a module from in our [training-setup](https://github.com/acend/training-setup)
+create a prod.tfvars and run deliver/deploy/deploy.sh

@@ -3,7 +3,7 @@ provider "cloudflare" { # using tf env vars
   api_token = var.cloudflare_api_token
 }
 
-// "K8S API for Training Cluster ${var.cluster_name}"
+// IPv4 "K8S API for Training Cluster ${var.cluster_name}"
 resource "cloudflare_record" "api_a_record" {
   zone_id = var.cloudflare_zone_id
   name    = "api.${var.cluster_name}.${split(".", var.cluster_domain)[0]}"
@@ -13,7 +13,7 @@ resource "cloudflare_record" "api_a_record" {
   proxied = false
 }
 
-// "K8S API for Training Cluster ${var.cluster_name}"
+// IPv6 "K8S API for Training Cluster ${var.cluster_name}"
 
 resource "cloudflare_record" "api_aaaa_record" {
   zone_id = var.cloudflare_zone_id
@@ -45,7 +45,7 @@ resource "kubernetes_secret" "cloudflare_api_token_secret" {
   metadata {
     name      = "cloudflare-api-token-secret"
     namespace = kubernetes_namespace.cert_manager.metadata.0.name
-    annotations  = {
+    annotations = {
       "kubed.appscode.com/sync" = "kubernetes.io/metadata.name=external-dns"
     }
   }

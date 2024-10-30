@@ -57,6 +57,7 @@ applicationsets:
                   storageclass: longhorn
                 resources: ${jsonencode(theia_resources)}
               dind:
+                enabled: ${tostring(dind-enabled)}
                 persistence:
                   enabled: ${tostring(dind-persistence-enabled)}
                   storageclass: longhorn
@@ -73,7 +74,7 @@ applicationsets:
                 command:
                 - sh
                 - -c
-                - echo Welcome to the songlaa theia ide > /home/project/welcome && echo Your VM IP is {{ipv4address}}  >> /home/project/welcome && echo You can login to your training VM using ssh -i id_ecdsa {{traineename}}@{{ipv4address}} >> /home/project/welcome && echo {{ssh-private-key}} | base64 -d > /home/project/id_ecdsa && chown 1001:1001 /home/project/id_ecdsa && chmod 600 /home/project/id_ecdsa
+                - echo Welcome to the songlaa theia ide > /home/project/welcome && echo Your VM IP is {{ipv4address}}  >> /home/project/welcome && echo You can login to your training VM using ssh -i id-ecdsa {{traineename}}@{{ipv4address}} >> /home/project/welcome && echo {{ssh-private-key}} | base64 -d > /home/project/id-ecdsa && chown 100:101 /home/project/id-ecdsa && chmod 600 /home/project/id-ecdsa
               %{~ else ~}
               init:
                 command:

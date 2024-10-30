@@ -27,3 +27,12 @@ output "count-students" {
 output "studentname-prefix" {
   value = var.studentname-prefix
 }
+
+output "student-vms-unattached-ips" {
+  value = var.user-vms-unattached-enabled ? module.student-vms-unattached[0].ip-address : []
+}
+
+output "student-vms-unattached-ssh_key" {
+  value     = var.user-vms-unattached-enabled ? module.student-vms-unattached[0].user-ssh-keys : []
+  sensitive = true
+}
