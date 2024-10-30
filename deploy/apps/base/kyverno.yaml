@@ -37,7 +37,7 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-      - Replace=true
+      - ServerSideApply=true
 ---
 # https://medium.com/@charled.breteche/using-kyverno-policies-with-argocd-1a600c1b249
 apiVersion: argoproj.io/v1alpha1
