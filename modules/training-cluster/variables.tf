@@ -194,11 +194,10 @@ variable "webshell-settings" {
 
   default = {
     version = "0.5.11"
-
+    dind-enabled              = true
     theia-persistence-enabled = true
     dind-persistence-enabled  = true
     webshell-rbac-enabled     = true
-    dind-enabled              = true
 
     dind_resources = {
       limits = {

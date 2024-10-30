@@ -53,6 +53,7 @@ resource "helm_release" "appset-trainee-webshell" {
         passwords                 = random_password.student-passwords,
         rbac-enabled              = var.webshell-settings.webshell-rbac-enabled,
         dind-persistence-enabled  = var.webshell-settings.dind-persistence-enabled,
+        dind-enabled              = var.webshell-settings.dind-enabled,
         theia-persistence-enabled = var.webshell-settings.theia-persistence-enabled
         user-vm-enabled           = var.user-vms-enabled
         ipv4-address              = var.user-vms-enabled ? module.student-vms[0].ip-address : []
