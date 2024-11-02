@@ -24,7 +24,7 @@ module "training-cluster" {
 
   cluster_name         = "training"
   cluster_domain       = "cluster.songlaa.com"
-  worker_count         = "2" // A minimum of 3 nodes is required
+  worker_count         = "4" // A minimum of 3 nodes is required
   cloudflare_api_token = var.cloudflare_api_token
   cloudflare_zone_id   = var.cloudflare_zone_id
   hcloud_api_token     = var.hcloud_api_token
@@ -38,7 +38,7 @@ module "training-cluster" {
   # Webshell
   # Make sure to scale down to 0 before removing the cluster, 
   # otherwise there will be terraform errors due to missing provider config
-  count-students = 4
+  count-students = 15
 
   # User VMs
   user-vms-enabled            = var.user-vms-enabled
@@ -97,6 +97,16 @@ output "count-students" {
 
 output "studentname-prefix" {
   value = module.training-cluster.studentname-prefix
+}
+
+
+output "student-vm-ips" {
+  value = module.training-cluster.student-vm-ips
+}
+
+output "student-vm-ssh-keys" {
+  value = module.training-cluster.student-vms-ssh_key
+  sensitive = true
 }
 
 

@@ -19,7 +19,22 @@ kubectl delete ns ingress-haproxy --ignore-not-found=true
 
 # Wait for DNS Record to be cleaned up
 sleep 120
-kubectl -n argocd delete application --all   || true
 kubectl -n argocd delete applicationsets --all   || true
+kubectl -n argocd delete application --all   || true
+
+kubectl delete  validatingwebhookconfigurations.admissionregistration.k8s.io kyverno-resource-validating-webhook-cfg --ignore-not-found=true
+kubectl delete  validatingwebhookconfigurations.admissionregistration.k8s.io kyverno-policy-validating-webhook-cfg --ignore-not-found=true
+
+
+echo "Destroying cluster with terraform"
+
+terraform destroy --auto-approve --var-file prod.tfvars
+
+#destroyin mostly fails because of kyverno webhook, just do it again
+kubectl delete  validatingwebhookconfigurations.admissionregistration.k8s.io kyverno-resource-validating-webhook-cfg --ignore-not-found=true
+kubectl delete  validatingwebhookconfigurations.admissionregistration.k8s.io kyverno-policy-validating-webhook-cfg --ignore-not-found=true
+
+
+echo "Destroying cluster with terraform"
 
 terraform destroy --auto-approve --var-file prod.tfvars

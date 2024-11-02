@@ -28,11 +28,11 @@ output "studentname-prefix" {
   value = var.studentname-prefix
 }
 
-output "student-vms-unattached-ips" {
-  value = var.user-vms-unattached-enabled ? module.student-vms-unattached[0].ip-address : []
+output "student-vm-ips" {
+  value = var.user-vms-enabled ? module.student-vms[0].ip-address : []
 }
 
-output "student-vms-unattached-ssh_key" {
-  value     = var.user-vms-unattached-enabled ? module.student-vms-unattached[0].user-ssh-keys : []
+output "student-vms-ssh_key" {
+  value     = var.user-vms-enabled ? module.student-vms[0].user-ssh-keys : []
   sensitive = true
 }

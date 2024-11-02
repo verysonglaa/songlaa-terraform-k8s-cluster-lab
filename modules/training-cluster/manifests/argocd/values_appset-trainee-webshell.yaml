@@ -11,7 +11,7 @@ applicationsets:
           ipv4address: "${ipv4-address[i]}"
           ipv6address: "${ipv6-address[i]}"
           sshpublickey: "${chomp(ssh-keys[i].public_key_openssh)}"
-          sshprivatekey: "${base64encode(ssh-keys[i].private_key_pem)}"
+          sshprivatekey: "${base64encode(ssh-keys[i].private_key_openssh)}"
           %{~ endif ~}
         %{~ endfor ~}
     template:
@@ -74,7 +74,7 @@ applicationsets:
                 command:
                 - sh
                 - -c
-                - echo Welcome to the songlaa theia ide > /home/project/welcome && echo Your VM IP is {{ipv4address}}  >> /home/project/welcome && echo You can login to your training VM using ssh -i id-ecdsa {{traineename}}@{{ipv4address}} >> /home/project/welcome && echo {{ssh-private-key}} | base64 -d > /home/project/id-ecdsa && chown 100:101 /home/project/id-ecdsa && chmod 600 /home/project/id-ecdsa
+                - echo Welcome to the songlaa theia ide > /home/project/welcome && echo Your VM IP is {{ipv4address}}  >> /home/project/welcome && echo You can login to your training VM using ssh -i id-ecdsa {{traineename}}@{{ipv4address}} >> /home/project/welcome && echo {{sshprivatekey}} | base64 -d > /home/project/id-ecdsa && chown 100:101 /home/project/id-ecdsa && chmod 600 /home/project/id-ecdsa
               %{~ else ~}
               init:
                 command:
