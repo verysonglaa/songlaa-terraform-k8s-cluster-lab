@@ -12,3 +12,4 @@ resources:
   - welcome.yaml
   - external-dns.yaml
   - kyverno.yaml
+  - cilium-clusterrole.yaml
