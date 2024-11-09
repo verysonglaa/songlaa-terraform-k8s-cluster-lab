@@ -21,6 +21,22 @@ In order to deploy our songlaa Kubernetes Cluster the following steps are necess
    * Cert-Manager
    * etc
 
+## Docker and Kubernetes Training Changes
+
+Create Cloudflare and Hetzner Tokens and put them into prod.tfvars
+Cluster size: ca. 3 Students/per Hosts
+Repo Should be public because of argo.
+
+Docker:
+
+* enable-dind
+
+Kubernetes:
+
+* disable-dind
+* apply kyverno policy "privileged containers"
+
+then run deliver/deploy/deploy.sh
 
 ### Components
 

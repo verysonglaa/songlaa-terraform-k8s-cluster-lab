@@ -37,4 +37,6 @@ kubectl delete  validatingwebhookconfigurations.admissionregistration.k8s.io kyv
 
 echo "Destroying cluster with terraform"
 
+kubectl -n cert-manager delete pods --all --force --grace-period=0
+
 terraform destroy --auto-approve --var-file prod.tfvars
