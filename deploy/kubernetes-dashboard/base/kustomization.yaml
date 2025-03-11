@@ -5,11 +5,5 @@ resources:
   - namespace.yaml
   - ingress.yaml
   - sa.yaml
+  - recommended.yaml
 
-helmCharts:
-  - name: kubernetes-dashboard
-    releaseName: kubernetes-dashboard
-    releaseName: ingress-haproxy
-    namespace: kubernetes-dashboard
-    version: 7.11.1
-    repo: https://kubernetes.github.io/dashboard/

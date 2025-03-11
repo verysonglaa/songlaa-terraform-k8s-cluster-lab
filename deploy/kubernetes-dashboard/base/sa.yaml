@@ -47,5 +47,16 @@ subjects:
   - kind: ServiceAccount
     name: read-only-user
     namespace: kubernetes-dashboard
+---
+# create token for read-only-user
+apiVersion: v1
+kind: Secret
+metadata:
+  name: read-only-user-token
+  namespace: kubernetes-dashboard
+  annotations:
+    kubernetes.io/service-account.name: read-only-user
+type: kubernetes.io/service-account-token
+
 # command to fetch token
-# kubectl -n kubernetes-dashboard get secret -n kubernetes-dashboard $(kubectl get serviceaccount read-only-user -n kubernetes-dashboard -o jsonpath="{.secrets[0].name}") -o jsonpath="{.data.token}" | base64 --decode
+# kubectl -n kubernetes-dashboard get secrets read-only-user-token -o jsonpath="{.data.token}" | base64 --decode
