@@ -13,3 +13,4 @@ resources:
   - external-dns.yaml
   - kyverno.yaml
   - cilium-clusterrole.yaml
+  - kubernetes-dashboard.yaml
