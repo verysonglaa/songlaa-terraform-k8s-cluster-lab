@@ -52,7 +52,7 @@ write_files:
       targetNamespace: kube-system
       repo: https://charts.hetzner.cloud
       bootstrap: true
-      version: v1.20.0
+      version: v1.23.0
       valuesContent: |-
         env:
           HCLOUD_LOAD_BALANCERS_LOCATION: 
@@ -64,10 +64,18 @@ write_files:
               secretKeyRef:
                 name: hcloud
                 key: token
+          HCLOUD_NETWORK:
+            valueFrom:
+              secretKeyRef:
+                name: hcloud
+                key: network
+          HCLOUD_NETWORK_ROUTES_ENABLED:
+            value: 'false'
           NODE_NAME:
             valueFrom:
               fieldRef:
-                fieldPath: spec.nodeName         
+                fieldPath: spec.nodeName
+   
 - path: /var/lib/rancher/rke2/server/manifests/rke2-cilium-config.yaml
   permission: "0600"
   owner: root:root
