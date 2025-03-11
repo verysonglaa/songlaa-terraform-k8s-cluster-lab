@@ -21,7 +21,7 @@ applicationsets:
         project: trainee-environment
         source:
           chart: webshell
-          repoURL: https://acend.github.io/webshell-env/
+          repoURL: https://songlaa.github.io/webshell-env/
           targetRevision: ${version}
           helm:
             releaseName: '{{traineename}}-webshell'
