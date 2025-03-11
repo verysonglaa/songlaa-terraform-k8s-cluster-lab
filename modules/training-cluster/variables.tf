@@ -42,7 +42,7 @@ variable "cluster_domain" {
 
 variable "rke2_version" {
   type        = string
-  default     = "v1.30.1+rke2r1"
+  default     = "v1.32.2+rke2r1"
   description = "Version of rke2 to install"
 }
 
@@ -114,7 +114,7 @@ variable "worker_count" {
 
 variable "letsencrypt_email" {
   type    = string
-  default = "gabriel@acend.ch"
+  default = "gabriel@songlaa.com"
 }
 
 
