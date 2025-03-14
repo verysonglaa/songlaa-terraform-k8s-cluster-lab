@@ -38,7 +38,7 @@ spec:
             secretKeyRef:
               name: token
               key: token
-        image: ghcr.io/songlaa/welcome-training-app:latest
+        image: quay.io/acend/welcome-training-app:latest
         imagePullPolicy: Always
         name: welcome
         readinessProbe:
