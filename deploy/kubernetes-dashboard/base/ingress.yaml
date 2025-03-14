@@ -8,6 +8,7 @@ metadata:
     haproxy-ingress.github.io/secure-backend: "true"
     haproxy-ingress.github.io/insecure-skip-tls-verify: "true"
 spec:
+  ingressClassName: haproxy
   rules:
     - host: kubedashboard.training.cluster.songlaa.com
       http:
