@@ -18,7 +18,7 @@ spec:
                 port:
                   number: 443
             path: /
-            pathType: ImplementationSpecific
+            pathType: Prefix
   tls:
     - hosts:
         - kubedashboard.training.cluster.songlaa.com

@@ -82,8 +82,8 @@ variable "controlplane_type" {
 
 variable "worker_type" {
   type        = string
-  default     = "cpx41"
-  description = "machine type to use for the controlplanes"
+  default     = "cpx31"
+  description = "machine type to use for the worker"
 }
 
 variable "node_image_type" {
@@ -107,8 +107,8 @@ variable "worker_count" {
   description = "Count of rke2 workers"
 
   validation {
-    condition     = var.worker_count >= 2
-    error_message = "You must have at least 3 worker nodes."
+    condition     = var.worker_count >= 1
+    error_message = "You must have at least 1 worker nodes."
   }
 }
 

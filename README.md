@@ -98,3 +98,15 @@ There is a Welcome page deployed at https://welcome.${cluster_name}.{cluster_dom
 ## Usage
 
 create a prod.tfvars and run deliver/deploy/deploy.sh
+
+## Troubleshooting
+
+The ssh key is added so just ssh to the public ip with root, kubectl is available /var/lib/rancher/rke2/bin.
+
+<https://docs.rke2.io/cluster_access>
+
+```bash
+export KUBECONFIG=/etc/rancher/rke2/rke2.yaml
+kubectl get pods --all-namespaces
+helm ls --all-namespaces
+```

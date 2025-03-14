@@ -38,7 +38,7 @@ spec:
             secretKeyRef:
               name: token
               key: token
-        image: quay.io/acend/welcome-training-app:latest
+        image: ghcr.io/songlaa/welcome-training-app:latest
         imagePullPolicy: Always
         name: welcome
         readinessProbe:
@@ -63,53 +63,6 @@ spec:
     targetPort: 8080
   selector:
     app: welcome
-# ---
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: welcome
-#   namespace: welcome
-# spec:
-#   ingressClassName: haproxy
-#   rules:
-#   - host: welcome.training.cluster.songlaa.com
-#     http:
-#       paths:
-#       - backend:
-#           service:
-#             name: welcome
-#             port:
-#               number: 80
-#         path: /
-#         pathType: ImplementationSpecific
-#   tls:
-#   - hosts:
-#     - welcome.training.cluster.songlaa.com
-# ---
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: welcome-teacher
-#   namespace: welcome
-#   annotations:
-#     ingress.kubernetes.io/auth-signin: https://github-oauth-proxy.acend.ch/oauth2/start?rd=https%%3A%%2F%%2Fwelcome.training.cluster.songlaa.com%%2Fteacher
-#     ingress.kubernetes.io/auth-url: https://github-oauth-proxy.acend.ch/oauth2/auth
-# spec:
-#   ingressClassName: haproxy
-#   rules:
-#   - host: welcome.training.cluster.songlaa.com
-#     http:
-#       paths:
-#       - backend:
-#           service:
-#             name: welcome
-#             port:
-#               number: 80
-#         path: /teacher
-#         pathType: ImplementationSpecific
-#   tls:
-#   - hosts:
-#     - welcome.training.cluster.songlaa.com
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
