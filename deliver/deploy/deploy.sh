@@ -20,6 +20,10 @@ for i in {0..10}; do
     echo $i >> .ssh-connection.txt
     terraform output -json student-vm-ssh-keys | jq -r .[$i].private_key_openssh >> .ssh-connection.txt
     echo "ssh -i $user.pem $user@$(terraform output -json student-vm-ips | jq -r .[$i]) " >> .ssh-connection.txt
+    echo >> .ssh-connection.txt
+    echo "token:" >> .ssh-connection.txt
+    echo "$(kubectl -n kubernetes-dashboard get secrets read-only-user-token -o jsonpath="{.data.token}" | base64 --decode)" >> .ssh-connection.txt
+    echo "---------------------------------" >> .ssh-connection.txt
 done
 
 echo "---------------------------------"
@@ -34,5 +38,3 @@ echo "username: admin"
 echo "password: $(terraform output argocd-admin-password)"
 
 echo "kubernetes dashboard: https://dashboard.training.cluster.songlaa.com"
-echo "token:"
-echo 'kubectl -n kubernetes-dashboard get secrets read-only-user-token -o jsonpath="{.data.token}" | base64 --decode'
