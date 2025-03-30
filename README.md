@@ -109,4 +109,7 @@ The ssh key is added so just ssh to the public ip with root, kubectl is availabl
 export KUBECONFIG=/etc/rancher/rke2/rke2.yaml
 kubectl get pods --all-namespaces
 helm ls --all-namespaces
+
+export CRI_CONFIG_FILE=/var/lib/rancher/rke2/agent/etc/crictl.yaml
+/var/lib/rancher/rke2/bin/crictl ps
 ```
