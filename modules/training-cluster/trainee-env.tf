@@ -47,6 +47,7 @@ resource "helm_release" "appset-trainee-webshell" {
     templatefile("${path.module}/manifests/argocd/values_appset-trainee-webshell.yaml",
       {
         studentname-prefix        = var.studentname-prefix,
+        location                  = var.location,
         count-students            = var.count-students,
         cluster_name              = var.cluster_name,
         cluster_domain            = var.cluster_domain,
