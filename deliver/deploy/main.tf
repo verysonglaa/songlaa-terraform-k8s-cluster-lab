@@ -24,7 +24,7 @@ module "training-cluster" {
 
   cluster_name         = "training"
   cluster_domain       = "cluster.songlaa.com"
-  worker_count         = "1" // A minimum of 3 nodes is required use 1 per 3 students with cpx31
+  worker_count         = var.worker_count // A minimum of 3 nodes is required use 1 per 3 students with cpx31
   cloudflare_api_token = var.cloudflare_api_token
   cloudflare_zone_id   = var.cloudflare_zone_id
   hcloud_api_token     = var.hcloud_api_token
@@ -34,13 +34,14 @@ module "training-cluster" {
   extra_ssh_keys = local.ssh_keys
 
   cluster_admin = ["user1"]
-  location = "sin"
-  networkzone = "ap-southeast" # must be compatible with the location (ap-southeast for sin )
+
+  location    = var.location
+  networkzone = var.networkzone # must be compatible with the location (ap-southeast for sin )
 
   # Webshell
   # Make sure to scale down to 0 before removing the cluster, 
   # otherwise there will be terraform errors due to missing provider config
-  count-students = 2
+  count-students = var.count-students
 
   # User VMs
   user-vms-enabled            = var.user-vms-enabled
@@ -52,8 +53,9 @@ module "training-cluster" {
   webshell-rbac-enabled = true
 
   webshell-settings = {
-    version = "0.5.16"
-    dind-enabled              = true
+    version                   = "0.5.18"
+    dind-enabled              = var.dind-enabled
+    dind-image-tag            = "29.0.1-dind${var.dind-rootless ? "-rootless" : ""}"
     theia-persistence-enabled = true
     dind-persistence-enabled  = true
     webshell-rbac-enabled     = true
@@ -107,7 +109,7 @@ output "student-vm-ips" {
 }
 
 output "student-vm-ssh-keys" {
-  value = module.training-cluster.student-vms-ssh_key
+  value     = module.training-cluster.student-vms-ssh_key
   sensitive = true
 }
 

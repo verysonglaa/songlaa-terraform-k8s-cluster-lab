@@ -29,40 +29,41 @@ resource "helm_release" "argocd" {
   repository  = "https://argoproj.github.io/argo-helm"
   chart       = "argo-cd"
   namespace   = kubernetes_namespace.argocd.metadata.0.name
-  version     = "7.4.0"
+  version     = "9.1.3"
   wait        = true
   max_history = 2
 
-  set {
+set = [
+  {
     name  = "global.domain"
     value = "argocd.${var.cluster_name}.${var.cluster_domain}"
-  }
+  },
 
-  set {
+  {
     name  = "configs.secret.argocdServerAdminPassword"
     value = random_password.argocd-admin-password.bcrypt_hash
-  }
+  },
 
-  set {
+  {
     name  = "server.ingress.hostname"
     value = "argocd.${var.cluster_name}.${var.cluster_domain}"
-  }
+  },
 
-  set {
+  {
     name  = "server.ingress.extraTls[0].hosts[0]"
     value = "argocd.${var.cluster_name}.${var.cluster_domain}"
-  }
+  },
 
-  set {
+  {
     name  = "server.ingressGrpc.hostname"
     value = "argocd-grpc.${var.cluster_name}.${var.cluster_domain}"
-  }
+  },
 
-  set {
+  {
     name  = "server.ingressGrpc.extraTls[0].hosts[0]"
     value = "argocd-grpc.${var.cluster_name}.${var.cluster_domain}"
   }
-
+]
   values = [
     templatefile("${path.module}/manifests/argocd/values_account_student.yaml", { studentname-prefix = var.studentname-prefix, count-students = var.count-students, passwords = random_password.student-passwords }),
     templatefile("${path.module}/manifests/argocd/values_rbacConfig_policy.yaml", { studentname-prefix = var.studentname-prefix, count-students = var.count-students, cluster_admin = var.cluster_admin }),
@@ -80,7 +81,7 @@ resource "helm_release" "argocd-applications" {
   repository = "https://argoproj.github.io/argo-helm"
   chart      = "argocd-apps"
   namespace  = kubernetes_namespace.argocd.metadata.0.name
-  version    = "2.0.0"
+  version    = "2.0.2"
 
   values = [
     templatefile("${path.module}/manifests/argocd/applications/base/applications.yaml", {

@@ -40,3 +40,25 @@ spec:
             containers:
               - =(securityContext):
                   =(privileged): "false"
+---
+apiVersion: kyverno.io/v2beta1
+kind: PolicyException
+metadata:
+  name: dind-rootless-privileged-exception
+spec:
+  exceptions:
+  - policyName: disallow-privileged-containers
+    ruleNames:
+    - privileged-containers
+  match:
+    any:
+    - resources:
+        kinds:
+          - Pod
+        namespaces:
+          - "user*"
+  podSecurity:
+    - controlName: Privileged Containers
+      images:
+        - "docker.io/docker:*-dind-rootless"
+        - "docker:*-dind-rootless"

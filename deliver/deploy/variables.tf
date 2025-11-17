@@ -28,3 +28,39 @@ variable "user-vms-unattached-count" {
   type        = number
   default     = 0
 }
+
+variable "count-students" {
+  description = "Number of students for the training cluster sizing"
+  type        = number
+  default     = 3
+}
+
+variable "worker_count" {
+  description = "Number of worker nodes in the training cluster, a minimum of 3 is required"
+  type        = number
+  default     = 3
+}
+
+variable "location" {
+  type        = string
+  default     = "nbg1"
+  description = "Hetzner location nbg1 as default, sin for Singapore"
+}
+
+variable "networkzone" {
+  type        = string
+  default     = "eu-central" # must be compatible with the location (eu-central for nbg1 )
+  description = "Hetzner networkzone eu-central as default, ap-southeast for Singapore"
+}
+
+variable "dind-rootless" {
+  description = "Use rootless dind image for webshell"
+  type        = bool
+  default     = true
+}
+
+variable "dind-enabled" {
+  description = "Enable dind for webshell, set to false for plain kubernetes trainings"
+  type        = bool
+  default     = true
+}

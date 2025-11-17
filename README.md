@@ -27,13 +27,19 @@ Create Cloudflare and Hetzner Tokens and put them into prod.tfvars
 Cluster size: ca. 3 Students/per Hosts
 Repo Should be public because of argo.
 
-Docker:
+Plain Kubernetes:
+* disable-dind
+* apply kyverno policy "privileged containers"
+
+Kubernetes Intro:
 
 * enable-dind
+* enable docker-rootless
+* apply kyverno policy "privileged containers - exluded images"
 
-Kubernetes:
+Kubernetes Security:
 
-* disable-dind
+* enable-dind
 * apply kyverno policy "privileged containers"
 
 then run deliver/deploy/deploy.sh
@@ -101,12 +107,22 @@ create a prod.tfvars and run deliver/deploy/deploy.sh
 
 ## Troubleshooting
 
-The ssh key is added so just ssh to the public ip with root, kubectl is available /var/lib/rancher/rke2/bin.
+The personal ssh public key is added so just ssh to the public ip with root, kubectl is available /var/lib/rancher/rke2/bin.
+
+```bash
+server1=$(jq -r '.resources[] | select(.type == "hcloud_server") | .instances[0].attributes.ipv4_address' terraform.tfstate | head -1)
+ssh root@$server1
+export KUBECONFIG=/etc/rancher/rke2/rke2.yaml
+export PATH=$PATH:/var/lib/rancher/rke2/bin
+kubectl get pods --all-namespaces
+helm ls --all-namespaces
+````
 
 <https://docs.rke2.io/cluster_access>
 
 ```bash
 export KUBECONFIG=/etc/rancher/rke2/rke2.yaml
+export PATH=$PATH:/var/lib/rancher/rke2/bin
 kubectl get pods --all-namespaces
 helm ls --all-namespaces
 

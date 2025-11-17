@@ -1,0 +1,67 @@
+---------------------------------
+Subject:
+E-mail: john.doe@example.com
+
+Dear John Doe,
+
+Welcome to your training course. You can access the course materials at:
+https://course.songlaa.com?n=user4
+
+You can access your personalized training environment at: 
+https://user4:@training.cluster.songlaa.com
+user: user4
+password: 
+
+You can find the slides here:
+Container:  https://drive.google.com/file/d/1A3PnnH1b-Gk_fc9MC2g9Jhs-hy5as4g-/view?usp=sharing
+Kubernetes: https://drive.google.com/file/d/1tFljU9g94C3AfEIVleThRLFKNxYi3mb3/view?usp=sharing
+
+Your token is:
+
+
+Best regards,
+
+Subject:
+E-mail: jane.smith@example.org
+
+Dear Jane Smith,
+
+Welcome to your training course. You can access the course materials at:
+https://course.songlaa.com?n=user5
+
+You can access your personalized training environment at: 
+https://user5:@training.cluster.songlaa.com
+user: user5
+password: 
+
+You can find the slides here:
+Container:  https://drive.google.com/file/d/1A3PnnH1b-Gk_fc9MC2g9Jhs-hy5as4g-/view?usp=sharing
+Kubernetes: https://drive.google.com/file/d/1tFljU9g94C3AfEIVleThRLFKNxYi3mb3/view?usp=sharing
+
+Your token is:
+
+
+Best regards,
+
+Subject:
+E-mail: 
+
+Dear  ,
+
+Welcome to your training course. You can access the course materials at:
+https://course.songlaa.com?n=user6
+
+You can access your personalized training environment at: 
+https://user6:@training.cluster.songlaa.com
+user: user6
+password: 
+
+You can find the slides here:
+Container:  https://drive.google.com/file/d/1A3PnnH1b-Gk_fc9MC2g9Jhs-hy5as4g-/view?usp=sharing
+Kubernetes: https://drive.google.com/file/d/1tFljU9g94C3AfEIVleThRLFKNxYi3mb3/view?usp=sharing
+
+Your token is:
+
+
+Best regards,
+
