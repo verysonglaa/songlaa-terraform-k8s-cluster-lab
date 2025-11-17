@@ -35,7 +35,7 @@ module "training-cluster" {
 
   cluster_admin = ["user1"]
 
-  location = var.location
+  location    = var.location
   networkzone = var.networkzone # must be compatible with the location (ap-southeast for sin )
 
   # Webshell
@@ -53,8 +53,9 @@ module "training-cluster" {
   webshell-rbac-enabled = true
 
   webshell-settings = {
-    version = "0.5.16"
+    version                   = "0.5.18"
     dind-enabled              = true
+    dind-image-tag            = "29.0.1-dind${var.dind-rootless ? "-rootless" : ""}"
     theia-persistence-enabled = true
     dind-persistence-enabled  = true
     webshell-rbac-enabled     = true
@@ -108,7 +109,7 @@ output "student-vm-ips" {
 }
 
 output "student-vm-ssh-keys" {
-  value = module.training-cluster.student-vms-ssh_key
+  value     = module.training-cluster.student-vms-ssh_key
   sensitive = true
 }
 

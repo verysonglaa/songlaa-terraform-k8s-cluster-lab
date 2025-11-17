@@ -15,8 +15,6 @@ variable "cloudflare_zone_id" {
   type        = string
 }
 
-
-
 variable "location" {
   type        = string
   default     = "nbg1"
@@ -41,9 +39,9 @@ variable "cluster_domain" {
 }
 
 variable "rke2_version" {
-  type        = string
-  default     = "v1.32.2+rke2r1"
   description = "Version of rke2 to install"
+  type        = string
+  default     = "v1.34.1+rke2r1"
 }
 
 variable "network" {
@@ -167,6 +165,7 @@ variable "webshell-settings" {
   type = object({
     version                   = string
     dind-enabled              = bool
+    dind-image-tag            = string
     theia-persistence-enabled = bool
     dind-persistence-enabled  = bool
     webshell-rbac-enabled     = bool
@@ -193,8 +192,9 @@ variable "webshell-settings" {
   })
 
   default = {
-    version = "0.5.16"
+    version = "0.5.18"
     dind-enabled              = true
+    dind-image-tag            = "29.0.1-dind-rootless"
     theia-persistence-enabled = true
     dind-persistence-enabled  = true
     webshell-rbac-enabled     = true

@@ -57,6 +57,8 @@ applicationsets:
                   storageclass: longhorn
                 resources: ${jsonencode(theia_resources)}
               dind:
+                image:
+                  tag: ${dind-image-tag}
                 enabled: ${tostring(dind-enabled)}
                 persistence:
                   enabled: ${tostring(dind-persistence-enabled)}

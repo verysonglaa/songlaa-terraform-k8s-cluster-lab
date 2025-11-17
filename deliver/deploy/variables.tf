@@ -42,13 +42,19 @@ variable "worker_count" {
 }
 
 variable "location" {
-  type    = string
-  default = "nbg1"
+  type        = string
+  default     = "nbg1"
   description = "Hetzner location nbg1 as default, sin for Singapore"
 }
 
 variable "networkzone" {
-  type    = string
-  default = "eu-central" # must be compatible with the location (eu-central for nbg1 )
+  type        = string
+  default     = "eu-central" # must be compatible with the location (eu-central for nbg1 )
   description = "Hetzner networkzone eu-central as default, ap-southeast for Singapore"
+}
+
+variable "dind-rootless" {
+  description = "Use rootless dind image for webshell"
+  type        = bool
+  default     = true
 }
