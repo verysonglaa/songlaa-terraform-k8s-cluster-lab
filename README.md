@@ -27,13 +27,19 @@ Create Cloudflare and Hetzner Tokens and put them into prod.tfvars
 Cluster size: ca. 3 Students/per Hosts
 Repo Should be public because of argo.
 
-Docker:
+Plain Kubernetes:
+* disable-dind
+* apply kyverno policy "privileged containers"
+
+Kubernetes Intro:
 
 * enable-dind
+* enable docker-rootless
+* apply kyverno policy "privileged containers - exluded images"
 
-Kubernetes:
+Kubernetes Security:
 
-* disable-dind
+* enable-dind
 * apply kyverno policy "privileged containers"
 
 then run deliver/deploy/deploy.sh

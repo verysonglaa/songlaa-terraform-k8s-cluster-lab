@@ -120,6 +120,17 @@ write_files:
           ui:
             enabled: true
         operator:
+          tolerations:
+          ## default tolerations not sure if needed
+          # - key: node-role.kubernetes.io/control-plane
+          #   operator: Exists
+          # - key: node-role.kubernetes.io/master
+          #   operator: Exists
+          # - key: node.kubernetes.io/not-ready
+          #   operator: Exists
+          ## below toleration added bc. https://github.com/cilium/cilium/issues/41921
+          - key: node.cloudprovider.kubernetes.io/uninitialized
+            operator: Exists
           prometheus:
             enabled: true
             serviceMonitor:

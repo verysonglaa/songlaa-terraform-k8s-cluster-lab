@@ -33,36 +33,37 @@ resource "helm_release" "argocd" {
   wait        = true
   max_history = 2
 
-  set {
+set = [
+  {
     name  = "global.domain"
     value = "argocd.${var.cluster_name}.${var.cluster_domain}"
-  }
+  },
 
-  set {
+  {
     name  = "configs.secret.argocdServerAdminPassword"
     value = random_password.argocd-admin-password.bcrypt_hash
-  }
+  },
 
-  set {
+  {
     name  = "server.ingress.hostname"
     value = "argocd.${var.cluster_name}.${var.cluster_domain}"
-  }
+  },
 
-  set {
+  {
     name  = "server.ingress.extraTls[0].hosts[0]"
     value = "argocd.${var.cluster_name}.${var.cluster_domain}"
-  }
+  },
 
-  set {
+  {
     name  = "server.ingressGrpc.hostname"
     value = "argocd-grpc.${var.cluster_name}.${var.cluster_domain}"
-  }
+  },
 
-  set {
+  {
     name  = "server.ingressGrpc.extraTls[0].hosts[0]"
     value = "argocd-grpc.${var.cluster_name}.${var.cluster_domain}"
   }
-
+]
   values = [
     templatefile("${path.module}/manifests/argocd/values_account_student.yaml", { studentname-prefix = var.studentname-prefix, count-students = var.count-students, passwords = random_password.student-passwords }),
     templatefile("${path.module}/manifests/argocd/values_rbacConfig_policy.yaml", { studentname-prefix = var.studentname-prefix, count-students = var.count-students, cluster_admin = var.cluster_admin }),
