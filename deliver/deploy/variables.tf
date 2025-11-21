@@ -58,3 +58,9 @@ variable "dind-rootless" {
   type        = bool
   default     = true
 }
+
+variable "dind-enabled" {
+  description = "Enable dind for webshell, set to false for plain kubernetes trainings"
+  type        = bool
+  default     = true
+}

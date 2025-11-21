@@ -54,7 +54,7 @@ module "training-cluster" {
 
   webshell-settings = {
     version                   = "0.5.18"
-    dind-enabled              = true
+    dind-enabled              = var.dind-enabled
     dind-image-tag            = "29.0.1-dind${var.dind-rootless ? "-rootless" : ""}"
     theia-persistence-enabled = true
     dind-persistence-enabled  = true
