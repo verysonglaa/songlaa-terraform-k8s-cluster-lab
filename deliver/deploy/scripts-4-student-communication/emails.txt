@@ -1,3 +1,3 @@
-john.doe@example.com
+john.doe@mail.ch
 jane.smith@example.org
 

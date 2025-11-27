@@ -1,18 +1,27 @@
+#!/bin/bash
+
+# This script reads a list of email addresses from a file and generates personalized email templates
+
 echo "---------------------------------" > .ssh-connection.txt
 echo "---------------------------------" > .email-templates.txt
 
-OUTPUT_FILE=".email-templates.txt"
-OUTPUT_LIST=".links.csv"
+# get absolute path of the script
+SCRIPT_DIR=$(dirname "$(realpath "$0")")
 
-EMAIL_LIST="emails.txt"
+OUTPUT_FILE="./current_instance/.email-templates.txt"
+OUTPUT_LIST="./current_instance/.links.csv"
+
+EMAIL_LIST="$SCRIPT_DIR/emails.txt"
+students=$(wc -l < "$EMAIL_LIST")
 training_course="https://course.songlaa.com"
 lab_environment="training.cluster.songlaa.com"
 slides="https://slides.songlaa.com"
 TOKEN=$(kubectl -n kubernetes-dashboard get secrets read-only-user-token -o jsonpath="{.data.token}" | base64 --decode)
 
-
+# add 3 teacher accounts to the student count
+students=$((students + 3))
 # Start the user at user4:
-line=4
+line=$students
 
 # Read the file line by line
 while IFS= read -r email; do
@@ -58,21 +67,23 @@ EOF
 done < "$EMAIL_LIST"
 
 
-for i in {0..10}; do
+echo "generate ssh connection info for students:"
+
+for ((i=0; i<=$students; i++)); do
 
     user="user"$((i+1))
     echo $i >> .ssh-connection.txt
     terraform output -json student-vm-ssh-keys | jq -r .[$i].private_key_openssh >> .ssh-connection.txt
     echo "ssh -i $user.pem $user@$(terraform output -json student-vm-ips | jq -r .[$i]) " >> .ssh-connection.txt
     echo >> .ssh-connection.txt
-    echo "token:" >> .ssh-connection.txt
-    echo "$(kubectl -n kubernetes-dashboard get secrets read-only-user-token -o jsonpath="{.data.token}" | base64 --decode)" >> .ssh-connection.txt
-    echo "---------------------------------" >> .ssh-connection.txt
+    echo "token:" >> ./current_instance/.ssh-connection.txt
+    echo "$(kubectl -n kubernetes-dashboard get secrets read-only-user-token -o jsonpath="{.data.token}" | base64 --decode)" >> ./current_instance/.ssh-connection.txt
+    echo "---------------------------------" >> ./current_instance/.ssh-connection.txt
 done
 
 
 echo "" >> "$OUTPUT_LIST" 
-for i in {0..22}; do
+for ((i=0; i<=$students; i++)); do
 
     export user="user"$((i+1))
     pwd=$(kubectl -n $user get secrets acend-userconfig -o jsonpath="{.data.password}" | base64 --decode)
@@ -88,3 +99,6 @@ Kubernetes: https://drive.google.com/file/d/1tFljU9g94C3AfEIVleThRLFKNxYi3mb3/vi
 Your token is:
 $TOKEN
 EOF
+
+echo "Done. Generated ./current_instance/.email-templates.txt and ./current_instance/.ssh-connection.txt"
+echo "Generated link list in ./current_instance/.links.csv"

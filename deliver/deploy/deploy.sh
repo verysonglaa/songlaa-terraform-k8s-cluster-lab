@@ -17,8 +17,10 @@ echo "find output data for ssh connections for students in .ssh-connection.txt"
 echo "find e-mail templates in .email-templates.txt"
 
 
-.../scripts-4-student-communication/create-linklist.sh
-.../scripts-4-student-communication/create-user-info.sh
+#./scripts-4-student-communication/create-linklist.sh
+
+echo "generate e-mail templates for students:"
+./scripts-4-student-communication/create-user-info.sh
 
 echo "---------------------------------"
 

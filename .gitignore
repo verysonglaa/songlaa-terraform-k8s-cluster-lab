@@ -3,5 +3,6 @@ terraform.tfvars
 terraform.tfstate
 terraform.tfstate.backup
 .terraform.lock.hcl
+deliver/deploy/current_instance/
 modules/training-cluster/output/
 kubectl*
