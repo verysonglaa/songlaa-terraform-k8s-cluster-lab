@@ -69,6 +69,7 @@ set = [
     templatefile("${path.module}/manifests/argocd/values_rbacConfig_policy.yaml", { studentname-prefix = var.studentname-prefix, count-students = var.count-students, cluster_admin = var.cluster_admin }),
     templatefile("${path.module}/manifests/argocd/values.yaml", { cluster_name = var.cluster_name, cluster_domain = var.cluster_domain }),
   ]
+  timeout = 600 # it can take longer for the cluster to be ready
 
 }
 

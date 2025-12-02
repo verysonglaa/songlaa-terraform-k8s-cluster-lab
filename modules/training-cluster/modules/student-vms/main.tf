@@ -5,16 +5,7 @@ resource "tls_private_key" "user-ssh-key" {
   count = var.count-students
 }
 
-data "template_file" "cloudinit_uservm" {
-  template = file("${path.module}/manifests/cloudinit.yaml")
-
-  vars = {
-    username = "${var.studentname-prefix}${count.index + 1}"
-    sshkey   = tls_private_key.user-ssh-key[count.index].public_key_openssh
-  }
-
-  count = var.count-students
-}
+data "hcloud_ssh_keys" "all" {}
 
 resource "hcloud_server" "user-vm" {
   count = var.count-students
@@ -29,14 +20,20 @@ resource "hcloud_server" "user-vm" {
   name        = "vm-${var.cluster_name}-${var.studentname-prefix}-${count.index + 1}"
   location    = var.location
   image       = "ubuntu-22.04"
-  server_type = "cx22"
+  server_type = var.node_type
 
   labels = {
     uservm : "true"
   }
 
-  ssh_keys = [var.ssh_key]
+  # add all ssh keys currently in hetzner to VM root account
+  ssh_keys = data.hcloud_ssh_keys.all.ssh_keys[*].id
 
-  user_data = data.template_file.cloudinit_uservm[count.index].rendered
+  user_data = templatefile("${path.module}/manifests/cloudinit.yaml", {
+    username    = "${var.studentname-prefix}${count.index + 1}"
+    ssh_keys    = [tls_private_key.user-ssh-key[count.index].public_key_openssh]
+    password    = var.student-passwords[count.index].bcrypt_hash
+    lock_passwd = var.enable_password_login ? "false" : "true"
+  })
 }
 

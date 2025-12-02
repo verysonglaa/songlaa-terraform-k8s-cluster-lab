@@ -48,8 +48,6 @@ module "student-vms" {
   student-passwords  = random_password.student-passwords
   studentname-prefix = var.studentname-prefix
 
-  ssh_key = hcloud_ssh_key.terraform.name
-
   count = local.vms-enabled
 
 }
@@ -62,8 +60,6 @@ module "student-vms-unattached" {
   count-students     = var.user-vms-unattached-count
   student-passwords  = random_password.student-passwords
   studentname-prefix = var.studentname-prefix
-
-  ssh_key = hcloud_ssh_key.terraform.name
 
   count = local.vms-unattached-enabled
 

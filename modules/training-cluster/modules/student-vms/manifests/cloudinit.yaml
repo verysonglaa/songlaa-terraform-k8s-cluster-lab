@@ -9,9 +9,8 @@ runcmd:
   - sysctl -p
   - curl -fsSL https://get.docker.com -o get-docker.sh; sh get-docker.sh
   - curl -LO https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl; install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-  - curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube; mv minikube /usr/local/bin
   - curl -s https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-  - iptables -I DOCKER-USER -j ACCEPT
+  # - iptables -I DOCKER-USER -j ACCEPT
   - echo 'source <(kubectl completion bash)' >> /home/${username}/.bashrc
   - git clone https://github.com/jonmosco/kube-ps1.git /home/${username}/kube-ps1
   - echo 'source /home/${username}/kube-ps1/kube-ps1.sh' >> /home/${username}/.bashrc 
@@ -19,6 +18,9 @@ runcmd:
   - git clone https://github.com/ahmetb/kubectx /opt/kubectx
   - ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx && ln -s /opt/kubectx/kubens /usr/local/bin/kubens
   - ln -sf /opt/kubectx/completion/kubens.bash /etc/bash_completion.d/kubens && ln -sf /opt/kubectx/completion/kubectx.bash /etc/bash_completion.d/kubectx
+  - curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.30.0/kind-linux-amd64
+  - chmod +x ./kind
+  - mv ./kind /usr/local/bin/kind
 
 
 
@@ -35,8 +37,12 @@ users:
   - name: ${username}
     groups: docker, admin
     ssh_authorized_keys:
-    - ${sshkey}
+%{ for ssh_key in ssh_keys ~}
+      - ${ssh_key}
+%{ endfor ~}
     shell: /bin/bash
     sudo: ALL=(ALL) NOPASSWD:ALL
+    passwd: ${password}
+    lock_passwd: ${lock_passwd}
 
 

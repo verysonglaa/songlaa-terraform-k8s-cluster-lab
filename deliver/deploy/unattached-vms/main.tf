@@ -19,6 +19,12 @@ variable "studentname-prefix" {
   default = "user"
 }
 
+variable "enable_password_login" {
+  type    = bool
+  default = false
+  description = "Enable password login for VMs (useful for troubleshooting)"
+}
+
 
 resource "random_password" "student-passwords" {
   length           = 16
@@ -41,18 +47,18 @@ resource "hcloud_ssh_key" "terraform" {
 }
 
 
-
 ### Start VM Deploy
 ###############################
 
 module "student-vms-unattached" {
   source = "../../../modules/training-cluster/modules/student-vms"
 
-  count-students     = var.count-students
-  student-passwords  = random_password.student-passwords
-  studentname-prefix = var.studentname-prefix
+  count-students        = var.count-students
+  student-passwords     = random_password.student-passwords
+  studentname-prefix    = var.studentname-prefix
+  enable_password_login = var.enable_password_login
 
-  ssh_key = hcloud_ssh_key.terraform.name
+  ssh_keys = [hcloud_ssh_key.terraform.id, "gabriel@thinkpad"]
 
   #count = var.count-students
   cluster_name = "unattached"
@@ -65,5 +71,10 @@ output "ips" {
 
 output "ssh_keys" {
   value     = module.student-vms-unattached.user-ssh-keys
+  sensitive = true
+}
+
+output "passwords" {
+  value     = module.student-vms-unattached.student-passwords
   sensitive = true
 }
