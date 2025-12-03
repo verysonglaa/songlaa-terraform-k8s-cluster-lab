@@ -26,6 +26,11 @@ resource "hcloud_server" "user-vm" {
     uservm : "true"
   }
 
+  public_net {
+    ipv4_enabled = true
+    ipv6_enabled = false # disable ipv6 to simplify labs
+  }
+
   # add all ssh keys currently in hetzner to VM root account
   ssh_keys = data.hcloud_ssh_keys.all.ssh_keys[*].id
 

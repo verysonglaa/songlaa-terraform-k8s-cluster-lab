@@ -58,8 +58,6 @@ module "student-vms-unattached" {
   studentname-prefix    = var.studentname-prefix
   enable_password_login = var.enable_password_login
 
-  ssh_keys = [hcloud_ssh_key.terraform.id, "gabriel@thinkpad"]
-
   #count = var.count-students
   cluster_name = "unattached"
 
