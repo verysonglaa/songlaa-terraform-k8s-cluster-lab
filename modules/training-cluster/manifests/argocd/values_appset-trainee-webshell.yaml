@@ -33,7 +33,7 @@ applicationsets:
                 enabled: true
                 className: haproxy
                 annotations:
-                  ingress.kubernetes.io/auth-realm: acend Webshell
+                  ingress.kubernetes.io/auth-realm: songlaa Webshell
                   ingress.kubernetes.io/auth-secret: webshell-basic-auth
                   ingress.kubernetes.io/auth-type: basic
                 hosts:
@@ -60,6 +60,7 @@ applicationsets:
                 image:
                   tag: ${dind-image-tag}
                 enabled: ${tostring(dind-enabled)}
+                rootless: ${tostring(dind-rootless)}
                 persistence:
                   enabled: ${tostring(dind-persistence-enabled)}
                   storageclass: longhorn
