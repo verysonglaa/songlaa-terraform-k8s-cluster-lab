@@ -169,6 +169,7 @@ variable "webshell-settings" {
     theia-persistence-enabled = bool
     dind-persistence-enabled  = bool
     webshell-rbac-enabled     = bool
+    dind-rootless             = bool
     dind_resources = object({
       limits = optional(object({
         memory = optional(string, null)
@@ -192,12 +193,13 @@ variable "webshell-settings" {
   })
 
   default = {
-    version = "0.5.18"
+    version = "0.5.20"
     dind-enabled              = true
     dind-image-tag            = "29.0.1-dind-rootless"
     theia-persistence-enabled = true
     dind-persistence-enabled  = true
     webshell-rbac-enabled     = true
+    dind-rootless             = true
 
     dind_resources = {
       limits = {

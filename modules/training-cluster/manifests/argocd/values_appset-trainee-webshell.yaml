@@ -66,8 +66,6 @@ applicationsets:
                   storageclass: longhorn
                   pvcsize: 10Gi
                 resources: ${jsonencode(dind_resources)}
-              podSecurityContext:
-                fsGroup: 1001
               updateStrategy:
                 type: Recreate
               rbac:

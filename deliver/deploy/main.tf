@@ -53,12 +53,12 @@ module "training-cluster" {
   webshell-rbac-enabled = true
 
   webshell-settings = {
-    version                   = "0.5.19"
+    version                   = "0.5.20"
     dind-enabled              = var.dind-enabled
     dind-image-tag            = "29.0.1-dind${var.dind-rootless ? "-rootless" : ""}"
     dind-rootless             = var.dind-rootless
     theia-persistence-enabled = true
-    dind-persistence-enabled  = true
+    dind-persistence-enabled  = var.dind-persistence-enabled
     webshell-rbac-enabled     = true
 
     dind_resources = {

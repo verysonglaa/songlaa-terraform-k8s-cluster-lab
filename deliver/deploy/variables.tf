@@ -64,3 +64,9 @@ variable "dind-enabled" {
   type        = bool
   default     = true
 }
+
+variable "dind-persistence-enabled" {
+  description = "Enable dind persistence for webshell, set to false for rootless dind trainings"
+  type        = bool
+  default     = true
+}
