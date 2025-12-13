@@ -10,6 +10,7 @@ SCRIPT_DIR=$(dirname "$(realpath "$0")")
 
 OUTPUT_FILE="./current_instance/.email-templates.txt"
 OUTPUT_LIST="./current_instance/.links.csv"
+OUTPUT_LIST_HUMANREADABLE="./current_instance/.links_human_readable.csv"
 
 EMAIL_LIST="$SCRIPT_DIR/emails.txt"
 students=$(wc -l < "$EMAIL_LIST")
@@ -82,12 +83,16 @@ for ((i=0; i<=$students; i++)); do
 done
 
 
-echo "" >> "$OUTPUT_LIST" 
+echo "generate link list for students:"
+
+echo "" > "$OUTPUT_LIST" 
+echo -e "User \t Link \t Username \t Password \t Container Training \t Kubernetes Training" > "$OUTPUT_LIST_HUMANREADABLE"
 for ((i=0; i<=$students; i++)); do
 
     export user="user"$((i+1))
     pwd=$(kubectl -n $user get secrets acend-userconfig -o jsonpath="{.data.password}" | base64 --decode)
-    echo "https://$user:$pwd@$lab_environment,$user,$pwd,https://container-training.songlaa.com,https://kubernetes-training.songlaa.com?n=$user" >> $OUTPUT_LIST
+    echo "https://$user:$pwd@$user.$lab_environment,$user,$pwd,https://container-training.songlaa.com?n=$user,https://kubernetes-training.songlaa.com?n=$user" >> $OUTPUT_LIST
+    echo -e "$user \t https://$user:$pwd@$user.$lab_environment \t $user \t $pwd \t https://container-training.songlaa.com?n=$user \t https://kubernetes-training.songlaa.com?n=$user" >> $OUTPUT_LIST_HUMANREADABLE
 
 done
 

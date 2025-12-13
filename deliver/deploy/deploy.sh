@@ -19,6 +19,7 @@ echo "find e-mail templates in .email-templates.txt"
 
 #./scripts-4-student-communication/create-linklist.sh
 
+export KUBECONFIG=~/.kube/training-cluster-config
 echo "generate e-mail templates for students:"
 ./scripts-4-student-communication/create-user-info.sh
 

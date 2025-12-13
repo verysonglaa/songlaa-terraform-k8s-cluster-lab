@@ -20,7 +20,7 @@ for i in {0..1}; do
     terraform output -json ssh_keys | jq -r .[$i].private_key_openssh  > $user.pem && chmod 600 $user.pem
     echo "ssh -o IdentitiesOnly=yes -i $SCRIPT_DIR/$user.pem $user@$(terraform output -json ips | jq -r .[$i]) "
     echo "or with thinkpad key:"
-    echo "ssh -i ~/.ssh/id_rsa root@$(terraform output -json ips | jq -r .[$i]) "
+    echo "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no root@$(terraform output -json ips | jq -r .[$i]) "
     echo "Pw auth if enabled (troubleshooting):"
     echo "Password: $(terraform output -json passwords | jq -r .[$i])"
 done
