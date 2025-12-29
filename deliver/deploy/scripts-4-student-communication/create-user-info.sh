@@ -20,9 +20,15 @@ slides="https://slides.songlaa.com"
 TOKEN=$(kubectl -n kubernetes-dashboard get secrets read-only-user-token -o jsonpath="{.data.token}" | base64 --decode)
 
 # add 3 teacher accounts to the student count
-students=$((students + 3))
-# Start the user at user4:
-line=$students
+# implement spare accounts, start with offset (include teacher accounts in the offset)
+spare_accounts=2 # 2 means 1 teacher account + 0 spare accounts (user1 is teacher)
+students=$((students + spare_accounts))
+# Start the user at offset:
+line=$spare_accounts
+
+# Clear the output file if it exists
+echo "" > "$OUTPUT_FILE"
+
 
 # Read the file line by line
 while IFS= read -r email; do
@@ -35,7 +41,7 @@ while IFS= read -r email; do
   eval "name$line=\"$name\""
   eval "email$line=\"$email\""
   eval "user$line=\"$prename $name <$email>\""
-  pwd=$(kubectl -n user1 get secrets acend-userconfig -o jsonpath="{.data.password}" | base64 --decode)
+  pwd=$(kubectl -n user$line get secrets acend-userconfig -o jsonpath="{.data.password}" | base64 --decode)
 
   cat >> "$OUTPUT_FILE" <<EOF
 Subject:
@@ -47,7 +53,7 @@ Welcome to your training course. You can access the course materials at:
 $training_course?n=user$line
 
 You can access your personalized training environment at: 
-https://user$line:$pwd@$lab_environment
+https://user$line:$pwd@user$line.$lab_environment
 user: user$line
 password: $pwd
 

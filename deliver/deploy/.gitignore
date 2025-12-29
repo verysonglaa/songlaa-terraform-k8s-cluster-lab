@@ -1,3 +1,4 @@
 *.tfvars
 *.yaml
 .ssh-connection.txt
+current_instance/
