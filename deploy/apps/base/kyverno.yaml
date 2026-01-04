@@ -23,7 +23,7 @@ spec:
         backgroundController:
           replicas: 2  # Set replicas to 2
         cleanupController:
-          replicas: 2  # Set replicas to 2
+          replicas: 0  # Set replicas to 2
         reportsController:
           replicas: 2  # Set replicas to 2
   ignoreDifferences:

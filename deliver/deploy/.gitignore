@@ -2,3 +2,4 @@
 *.yaml
 .ssh-connection.txt
 current_instance/
+scripts-4-student-communication/emails.txt
