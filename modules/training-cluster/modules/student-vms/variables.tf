@@ -25,7 +25,7 @@ variable "cluster_name" {
 
 variable "node_type" {
   type        = string
-  default     = "cx23" #cx23 2cpu/4 GB
+  default     = "cx23" #cx23 2cpu/4 GB use cpx22 in singapore
   description = "machine type to use for the vm"
 }
 

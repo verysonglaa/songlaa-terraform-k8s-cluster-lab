@@ -84,6 +84,12 @@ variable "worker_type" {
   description = "machine type to use for the worker"
 }
 
+variable "user_vm_node_type" {
+  type        = string
+  default     = "cx23" #cx23 2cpu/4 GB use cpx12 in singapore
+  description = "machine type to use for the vm"
+}
+
 variable "node_image_type" {
   type        = string
   default     = "ubuntu-22.04"
@@ -193,7 +199,7 @@ variable "webshell-settings" {
   })
 
   default = {
-    version = "0.5.20"
+    version = "0.5.21"
     dind-enabled              = true
     dind-image-tag            = "29.0.1-dind-rootless"
     theia-persistence-enabled = true

@@ -61,6 +61,7 @@ module "student-vms-unattached" {
   student-passwords  = random_password.student-passwords
   studentname-prefix = var.studentname-prefix
 
-  count = local.vms-unattached-enabled
+  count     = local.vms-unattached-enabled
+  node_type = var.user_vm_node_type
 
 }

@@ -70,3 +70,21 @@ variable "dind-persistence-enabled" {
   type        = bool
   default     = true
 }
+
+variable "controlplane_type" {
+  type        = string
+  default     = "cx33" #cx33 4cpu/8gbRAM use cpx32 in singapore
+  description = "machine type to use for the controlplanes"
+}
+
+variable "worker_type" {
+  type        = string
+  default     = "cx43" #cx43 4cpu/16gbRAM use cpx42 in singapore
+  description = "machine type to use for the worker"
+}
+
+variable "user_vm_node_type" {
+  type        = string
+  default     = "cx23" #cx23 2cpu/4 GB use cpx12 in singapore
+  description = "machine type to use for the vm"
+}

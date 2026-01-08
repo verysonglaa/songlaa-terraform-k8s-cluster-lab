@@ -28,6 +28,8 @@ module "training-cluster" {
   cloudflare_api_token = var.cloudflare_api_token
   cloudflare_zone_id   = var.cloudflare_zone_id
   hcloud_api_token     = var.hcloud_api_token
+  controlplane_type    = var.controlplane_type
+  worker_type          = var.worker_type
 
 
   # SSH Public keys deployed on the VM's for SSH access
@@ -53,7 +55,7 @@ module "training-cluster" {
   webshell-rbac-enabled = true
 
   webshell-settings = {
-    version                   = "0.5.20"
+    version                   = "0.5.21"
     dind-enabled              = var.dind-enabled
     dind-image-tag            = "29.0.1-dind${var.dind-rootless ? "-rootless" : ""}"
     dind-rootless             = var.dind-rootless
