@@ -17,14 +17,14 @@ fi
 terraform output --raw training-kubeconfig > ~/.kube/training-cluster-config
 
 echo "Done, wait 2 minutes for the cluster to be ready"
-sleep 120
+sleep 180
 
 
 #./scripts-4-student-communication/create-linklist.sh
 
 export KUBECONFIG=~/.kube/training-cluster-config
 echo "generate e-mail templates for students:"
-./scripts-4-student-communication/create-user-info.sh
+KUBECONFIG=~/.kube/training-cluster-config ./scripts-4-student-communication/create-user-info.sh
 echo "find e-mail templates in current_instance/.email-templates.txt"
 
 echo "---------------------------------"
