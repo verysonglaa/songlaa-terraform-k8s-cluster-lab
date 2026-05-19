@@ -41,7 +41,7 @@ variable "cluster_domain" {
 variable "rke2_version" {
   description = "Version of rke2 to install"
   type        = string
-  default     = "v1.34.1+rke2r1"
+  default     = "v1.35.4+rke2r1"
 }
 
 variable "network" {

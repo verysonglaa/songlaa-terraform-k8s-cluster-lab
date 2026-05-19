@@ -29,7 +29,7 @@ resource "helm_release" "argocd" {
   repository  = "https://argoproj.github.io/argo-helm"
   chart       = "argo-cd"
   namespace   = kubernetes_namespace.argocd.metadata.0.name
-  version     = "9.1.3"
+  version     = "9.5.11"
   wait        = true
   max_history = 2
 
@@ -82,7 +82,7 @@ resource "helm_release" "argocd-applications" {
   repository = "https://argoproj.github.io/argo-helm"
   chart      = "argocd-apps"
   namespace  = kubernetes_namespace.argocd.metadata.0.name
-  version    = "2.0.2"
+  version    = "2.0.4"
 
   values = [
     templatefile("${path.module}/manifests/argocd/applications/base/applications.yaml", {
