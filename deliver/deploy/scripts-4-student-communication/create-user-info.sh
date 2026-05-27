@@ -2,8 +2,6 @@
 
 # This script reads a list of email addresses from a file and generates personalized email templates
 
-echo "---------------------------------" > .ssh-connection.txt
-echo "---------------------------------" > .email-templates.txt
 
 # get absolute path of the script
 SCRIPT_DIR=$(dirname "$(realpath "$0")")
@@ -14,9 +12,9 @@ OUTPUT_LIST_HUMANREADABLE="./current_instance/.links_human_readable.csv"
 
 EMAIL_LIST="$SCRIPT_DIR/emails.txt"
 students=$(wc -l < "$EMAIL_LIST")
-training_course="https://course.songlaa.com"
+training_course="https://container-training.songlaa.com"
 lab_environment="training.cluster.songlaa.com"
-slides="https://slides.songlaa.com"
+slides=""
 TOKEN=$(kubectl -n kubernetes-dashboard get secrets read-only-user-token -o jsonpath="{.data.token}" | base64 --decode)
 
 # add 3 teacher accounts to the student count
@@ -44,27 +42,34 @@ while IFS= read -r email; do
   pwd=$(kubectl -n user$line get secrets acend-userconfig -o jsonpath="{.data.password}" | base64 --decode)
 
   cat >> "$OUTPUT_FILE" <<EOF
-Subject:
+
+--------------------------------------------------------------------------------
+
+Subject: Container and Kubernetes Training Information for ${prename^} ${name^}
 E-mail: $email
 
-Dear ${prename^} ${name^},
+Hi ${prename^} ${name^},
 
-Welcome to your training course. You can access the course materials at:
-$training_course?n=user$line
+Welcome to your Container and Kubernetes Training. You can access your personal course materials at:
 
-You can access your personalized training environment at: 
+Container Training: $training_course?n=user$line
+Kubernetes Training: https://kubernetes-training.songlaa.com?n=user$line
+
+The personalized training environment is pre-configured with all necessary tools and resources to help you get the most out of the training:
 https://user$line:$pwd@user$line.$lab_environment
-user: user$line
-password: $pwd
+User: user$line
+Password: $pwd
 
-You can find the slides here:
-Container:  
-Kubernetes:
 
-Your token is:
-$TOKEN
+The slides used during the training are available here:
 
-Best regards,
+Container:  tbd
+Kubernetes: tbd
+
+We wish you a great training!
+
+Gabriel & Philipp
+
 EOF
 
   echo "" >> "$OUTPUT_FILE" # optional: add an empty line between messages
@@ -101,15 +106,6 @@ for ((i=0; i<=$students; i++)); do
     echo -e "$user \t https://$user:$pwd@$user.$lab_environment \t $user \t $pwd \t https://container-training.songlaa.com?n=$user \t https://kubernetes-training.songlaa.com?n=$user" >> $OUTPUT_LIST_HUMANREADABLE
 
 done
-
-cat >> "$OUTPUT_LIST" <<EOF
-You can find the slides here:
-Container:  https://drive.google.com/file/d/1A3PnnH1b-Gk_fc9MC2g9Jhs-hy5as4g-/view?usp=sharing
-Kubernetes: https://drive.google.com/file/d/1tFljU9g94C3AfEIVleThRLFKNxYi3mb3/view?usp=sharing
-
-Your token is:
-$TOKEN
-EOF
 
 echo "Done. Generated ./current_instance/.email-templates.txt and ./current_instance/.ssh-connection.txt"
 echo "Generated link list in ./current_instance/.links.csv"

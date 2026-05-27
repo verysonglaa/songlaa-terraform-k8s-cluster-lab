@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # Path to your file with emails (one per line in format prename.name@domain)
-EMAIL_LIST="emails.txt"
+# use $1 to pass the filename as an argument, default to emails.txt if not provided
+  
+EMAIL_LIST="${1:-emails.txt}"
 
 # Initialize line counter
 line=1

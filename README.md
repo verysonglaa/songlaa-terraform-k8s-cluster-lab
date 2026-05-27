@@ -27,7 +27,7 @@ Repo Should be public because of argo.
 ### Todo
 
 * Create Cloudflare and Hetzner Tokens and put them into prod.tfvars
-* Cluster size: ca. 3 Students/per Hosts
+* Cluster size: account for ~ 3GB per user in RAM on Host (3 User/8GB), check current hetzner availability in https://radar.iodev.org/cloud-status
 * add students e-mails to scripts-4-student-communication/emails.txt
 
 
@@ -120,6 +120,7 @@ The personal ssh public key is added so just ssh to the public ip with root, kub
 
 ```bash
 server1=$(jq -r '.resources[] | select(.type == "hcloud_server") | .instances[0].attributes.ipv4_address' terraform.tfstate | head -1)
+echo $server1
 ssh root@$server1
 export KUBECONFIG=/etc/rancher/rke2/rke2.yaml
 export PATH=$PATH:/var/lib/rancher/rke2/bin
