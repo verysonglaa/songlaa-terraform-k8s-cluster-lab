@@ -29,6 +29,7 @@ Repo Should be public because of argo.
 * Create Cloudflare and Hetzner Tokens and put them into prod.tfvars
 * Cluster size: account for ~ 3GB per user in RAM on Host (3 User/8GB), check current hetzner availability in https://radar.iodev.org/cloud-status
 * add students e-mails to scripts-4-student-communication/emails.txt
+* Currently it is sometimes necessary to reboot a controlplan/worker node after initial creation because of networkproblems at startup.
 
 
 Plain Container:

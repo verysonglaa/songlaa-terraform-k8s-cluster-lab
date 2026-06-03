@@ -16,7 +16,7 @@ fi
 
 terraform output --raw training-kubeconfig > ~/.kube/training-cluster-config
 
-echo "Done, wait 2 minutes for the cluster to be ready"
+echo "Done, wait 3 minutes for the cluster to be ready"
 sleep 180
 
 
