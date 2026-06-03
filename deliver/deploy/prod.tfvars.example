@@ -1,0 +1,27 @@
+# update this tfvar on new installations to setup the cluste
+
+hcloud_api_token            = ""
+cloudflare_api_token        = "" 
+cloudflare_zone_id          = "" #find in cloudflare dashboard
+user-vms-enabled            = false # set to true for security training
+user-vms-unattached-count   = 0
+user-vms-unattached-enabled = false
+worker_count                = 3 # minimum 3, 1 per 3 students with cpx31
+count-students              = 2
+dind-rootless               = false # true for security training
+dind-persistence-enabled    = true
+
+
+# uncomment for for hetzner performance instances (in case of shortage)
+worker_type       = "cpx32" # 16gb RAM (ca. 6-7 students per worker)
+controlplane_type = "cpx32"
+
+
+
+
+# uncomment for singapore deployment
+# location          = "sin"
+# networkzone       = "ap-southeast"
+# user_vm_node_type = "cpx12"
+# worker_type       = "cpx42"
+# controlplane_type = "cpx32"
