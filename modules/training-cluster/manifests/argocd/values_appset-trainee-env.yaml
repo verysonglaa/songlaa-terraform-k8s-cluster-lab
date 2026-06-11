@@ -6,8 +6,8 @@ applicationsets:
         elements:
         %{~ for i in range(count-students) ~}
         - traineename: ${studentname-prefix}${i+1}
-          password: "${passwords[i].result}"
-          password_bcrypt: "${passwords[i].bcrypt_hash}"
+          password: "${passwords_plain[i]}"
+          password_bcrypt: "${passwords_bcrypt[i]}"
           cluster_admin: "${tostring(contains(cluster_admin, join("", tolist([studentname-prefix,i+1]))))}"
         %{~ endfor ~}
     template:

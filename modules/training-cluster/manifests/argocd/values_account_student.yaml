@@ -6,6 +6,6 @@ configs:
   secret:
     extra:
       %{~ for i in range(count-students) ~}
-      accounts.${studentname-prefix}${i+1}.password: "${passwords[i].bcrypt_hash}"
-      accounts.${studentname-prefix}${i+1}.passwordMtime: "${timestamp()}"
+      accounts.${studentname-prefix}${i+1}.password: "${password_bcrypts[i]}"
+      accounts.${studentname-prefix}${i+1}.passwordMtime: "1970-01-01T00:00:00Z"
       %{~ endfor ~}

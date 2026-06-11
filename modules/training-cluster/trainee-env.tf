@@ -20,7 +20,8 @@ resource "helm_release" "appset-trainee-env" {
       count-students     = var.count-students,
       cluster_name       = var.cluster_name,
       cluster_domain     = var.cluster_domain,
-      passwords          = random_password.student-passwords,
+      passwords_plain    = random_password.student-passwords[*].result,
+      passwords_bcrypt   = random_password.student-passwords[*].bcrypt_hash,
       cluster_admin      = var.cluster_admin
     }),
   ]
@@ -51,7 +52,7 @@ resource "helm_release" "appset-trainee-webshell" {
         count-students            = var.count-students,
         cluster_name              = var.cluster_name,
         cluster_domain            = var.cluster_domain,
-        passwords                 = random_password.student-passwords,
+        passwords_bcrypt          = random_password.student-passwords[*].bcrypt_hash,
         rbac-enabled              = var.webshell-settings.webshell-rbac-enabled,
         dind-persistence-enabled  = var.webshell-settings.dind-persistence-enabled,
         dind-enabled              = var.webshell-settings.dind-enabled,
